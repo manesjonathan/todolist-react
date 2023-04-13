@@ -2,23 +2,22 @@ import TodoApp from "./TodoApp.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import PrivateRoute from "./PrivateRoute.jsx";
 import Login from "./Login.jsx";
-import {AuthProvider} from './AuthContext';
+import Register from "./Register.jsx";
 
 const App = () => {
 
     return (
-        <AuthProvider>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Login/>}/>
-                    <Route path="/home" element={
-                        <PrivateRoute>
-                            <TodoApp/>
-                        </PrivateRoute>
-                    }/>
-                </Routes>
-            </BrowserRouter>
-        </AuthProvider>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Login/>}/>
+                <Route path="/register" element={<Register/>}/>
+                <Route path="/home" element={
+                    <PrivateRoute>
+                        <TodoApp/>
+                    </PrivateRoute>
+                }/>
+            </Routes>
+        </BrowserRouter>
     );
 }
 

@@ -1,35 +1,45 @@
 import React, {useState} from 'react';
+import {registerFunction} from "./backend.js";
 import {useNavigate} from "react-router-dom";
-import {loginFunction} from "./backend.js";
 
-const Login = () => {
+function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const handleLogin = (event) => {
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const handleConfirmPasswordChange = (event) => {
+        setConfirmPassword(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
         event.preventDefault();
-        // Here you can write the logic to check if the email and password are correct
-        // make API call to authenticate user and set user state
         try {
-            loginFunction(email, password, navigate).catch(() => {
-                setError("Invalid email or password");
+            registerFunction(email, password, navigate).catch(() => {
+                setError("Utilisateur déjà présent");
             })
         } catch (e) {
             console.error(e);
             setError("An error occurred");
         }
-    }
+    };
 
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-md w-full space-y-8">
                 <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Bonjour!</h2>
-                    <h2 className="text-center text-3xl font-extrabold text-gray-900">Connecte toi d'abord!</h2>
+                    <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Créer un compte</h2>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleLogin}>
+                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <input type="hidden" name="remember" defaultValue="true"/>
                     <div className="rounded-md shadow-sm -space-y-px">
                         <div>
@@ -45,7 +55,7 @@ const Login = () => {
                                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Addresse email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}
+                                onChange={handleEmailChange}
                             />
                         </div>
                         <div>
@@ -56,36 +66,31 @@ const Login = () => {
                                 id="password"
                                 name="password"
                                 type="password"
-                                autoComplete="current-password"
+                                autoComplete="new-password"
                                 required
-                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                                 placeholder="Mot de passe"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}
+                                onChange={handlePasswordChange}
                             />
                         </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                            />
-                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                Remember me
+                        <div>
+                            <label htmlFor="confirm-password" className="sr-only">
+                                Confirm Password
                             </label>
-                        </div>
-
-                        <div className="text-sm">
-                            <a href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                               Pas de compte?
-                            </a>
+                            <input
+                                id="confirm-password"
+                                name="confirm-password"
+                                type="password"
+                                autoComplete="new-password"
+                                required
+                                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                                placeholder="Confirme le mot de passe"
+                                value={confirmPassword}
+                                onChange={handleConfirmPasswordChange}
+                            />
                         </div>
                     </div>
-
                     <div>
                         <button
                             type="submit"
@@ -99,7 +104,4 @@ const Login = () => {
     );
 }
 
-export default Login;
-
-
-
+export default Register;

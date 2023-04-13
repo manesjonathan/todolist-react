@@ -3,7 +3,7 @@ import {useEffect} from "react";
 
 const PrivateRoute = (element) => {
     const navigate = useNavigate();
-    const isAuthenticated = !!localStorage.getItem("user");
+    const isAuthenticated = !!sessionStorage.getItem("user");
 
     useEffect(() => {
         if (!isAuthenticated) {

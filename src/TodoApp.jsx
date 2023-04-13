@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {v4 as uuid} from 'uuid';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import './index.css';
 import {createTask, deleteTask, getTasks, updateTask} from "./backend.js";
-import axios from "axios";
 
 function TodoApp() {
     const [tasks, setTasks] = useState([]);
@@ -14,7 +12,6 @@ function TodoApp() {
 
     useEffect(() => {
         getTasks().then((response) => {
-            console.log(response)
             setTasks(response);
         });
     }, []);
@@ -37,13 +34,12 @@ function TodoApp() {
         } else {
             newTasks.splice(result.destination.index, 0, {...removed, status: result.destination.droppableId});
         }
-
+        const taskId = removed.id;
+        const newStatus = result.destination.droppableId;
+        const text = removed.text;
+        updateTask(taskId, text, newStatus)
         setTasks(newTasks);
-        // Make a patch request if the status of a task has changed
-            const taskId = removed.id;
-            const newStatus = result.destination.droppableId;
-            const text = removed.text;
-            updateTask(taskId, text, newStatus)
+
     }
 
 
@@ -78,7 +74,7 @@ function TodoApp() {
             </header>
             <div className="flex justify-center mt-4">
                 <DragDropContext onDragEnd={handleDragEnd} handleDragStart={handleDragStart}>
-                    <div className="flex space-x-4">
+                    <div className="flex space-y-4 lg:space-x-4 lg:space-y-0 flex-col lg:flex-row ">
                         <Droppable droppableId="todo">
                             {(provided) => (
                                 <div

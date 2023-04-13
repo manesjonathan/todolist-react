@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const url = `https://api.jonathan-manes.be/`;
 
 export const loginFunction = (email, password, navigate) => {
@@ -6,9 +7,18 @@ export const loginFunction = (email, password, navigate) => {
         email: email,
         password: password
     }).then(res => {
-        console.log(res)
         sessionStorage.setItem('user', res.data);
-        navigate("/home");
+        navigate('/home');
+    });
+}
+export const registerFunction = (email, password, navigate) => {
+    console.log(email, password)
+    return axios.post(`https://api.jonathan-manes.be/register`, {
+        email: email,
+        password: password
+    }).then(res => {
+        sessionStorage.setItem('user', res.data);
+        navigate('/home');
     });
 }
 
@@ -17,20 +27,17 @@ export const createTask = (text, status) => {
         text: text,
         status: status
     }).then(res => {
-        console.log(res)
     });
 }
 
 export const getTasks = () => {
     return axios.get(`${url}api/tasks`).then(res => {
-        console.log(res.data)
         return res.data;
     });
 }
 
 export const deleteTask = (id) => {
     return axios.delete(`${url}api/tasks/${id}`).then(res => {
-        console.log(res)
     });
 }
 
@@ -39,6 +46,5 @@ export const updateTask = (id, text, status) => {
         text: text,
         status: status
     }).then(res => {
-        console.log(res)
     });
 }
