@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {Link} from 'react-scroll'
 import {FaBars} from "react-icons/fa";
 
 const Navbar = () => {
@@ -30,17 +29,17 @@ const Navbar = () => {
 
                             <li>
                                 <a className={'px-3 py-2 flex text-xs uppercase font-bold leading-snug hover:opacity-75 cursor-pointer'}
-                                    href={'/home'}>Todo list
+                                   href={'/home'}>Todo list
                                 </a>
                             </li>
                             <li>
                                 <a className={'px-3 py-2 flex text-xs uppercase font-bold leading-snug hover:opacity-75 cursor-pointer'}
-                                    href={'/calendar'}>Calendrier
+                                   href={'/calendar'}>Calendrier
                                 </a>
                             </li>
                             <li>
                                 <a className={'px-3 py-2 flex text-xs uppercase font-bold leading-snug hover:opacity-75 cursor-pointer'}
-                                    href={'/logout'}>Logout
+                                   href={'/logout'}>Logout
                                 </a>
                             </li>
 

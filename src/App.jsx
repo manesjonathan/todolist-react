@@ -5,7 +5,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
-
+import CalendarView from "./pages/CalendarView.jsx";
 const App = () => {
     return (
         <BrowserRouter>
@@ -16,6 +16,12 @@ const App = () => {
                     <PrivateRoute>
                         <Navbar/>
                         <TodoApp/>
+                    </PrivateRoute>
+                }/>
+                <Route path="/calendar" element={
+                    <PrivateRoute>
+                        <Navbar/>
+                        <CalendarView/>
                     </PrivateRoute>
                 }/>
                 <Route path={"/logout"} element={<Logout/>}/>

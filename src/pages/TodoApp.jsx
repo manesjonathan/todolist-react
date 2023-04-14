@@ -1,20 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
-import {createTask, deleteTask, getTasks, updateTask} from "./../backend/backend.js";
+import {DragDropContext, Droppable} from 'react-beautiful-dnd';
+import {createTask, getTasks, updateTask} from "./../backend/backend.js";
+import getDraggable from "../components/TaskDisplay.jsx";
 
 function TodoApp() {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
-
     const [sourceColumn, setSourceColumn] = useState("");
-
 
     useEffect(() => {
         getTasks().then((response) => {
             setTasks(response);
         });
     }, []);
-
 
     const handleDragStart = (result) => {
         setSourceColumn(result.source.droppableId);
@@ -38,17 +36,7 @@ function TodoApp() {
         const text = removed.text;
         updateTask(taskId, text, newStatus)
         setTasks(newTasks);
-
     }
-
-
-    const getList = (status) => tasks.filter((task) => task.status === status);
-
-
-    const handleDelete = (id) => {
-        deleteTask(id);
-        setTasks(tasks.filter((task) => task.id !== id));
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -65,124 +53,67 @@ function TodoApp() {
         setTasks([...tasks, newTodo]);
         setInputValue('');
     };
+    const getList = (status) => tasks.filter((task) => task.status === status);
 
     return (
-        <main className="mt-12 bg-main-bg bg-no-repeat bg-cover h-screen-custom">
-            <div className="flex justify-center">
-                <DragDropContext onDragEnd={handleDragEnd} handleDragStart={handleDragStart}>
-                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-16 lg:space-y-0 mt-14">
-                        <Droppable droppableId="todo">
-                            {(provided) => (
-                                <div
-                                    className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto"
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}>
-                                    <h2 className="text-lg font-bold mb-4">Todo</h2>
-                                    {getList("todo").map((task, index) => (
-                                        <Draggable
-                                            key={task.id}
-                                            draggableId={task.id.toString()}
-                                            index={tasks.findIndex((t) => t.id === task.id)}>
-                                            {(provided) => (
-                                                <div
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                    ref={provided.innerRef}
-                                                    className="bg-white p-2 rounded-lg shadow-md mb-2 ">
-                                                    <p>{task.text}</p>
-                                                    <button
-                                                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg mt-2"
-                                                        onClick={() => handleDelete(task.id)}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                        <Droppable droppableId="doing">
-                            {(provided) => (
-                                <div
-                                    className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto"
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}>
-                                    <h2 className="text-lg font-bold mb-4">Doing</h2>
-                                    {getList("doing").map((task, index) => (
-                                        <Draggable
-                                            key={task.id}
-                                            draggableId={task.id.toString()}
-                                            index={tasks.findIndex((t) => t.id === task.id)}>
-                                            {(provided) => (
-                                                <div
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                    ref={provided.innerRef}
-                                                    className="bg-white p-2 rounded-lg shadow-md mb-2">
-                                                    <p>{task.text}</p>
-                                                    <button
-                                                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg mt-2"
-                                                        onClick={() => handleDelete(task.id)}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                        <Droppable droppableId="done">
-                            {(provided) => (
-                                <div
-                                    className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto"
-                                    {...provided.droppableProps}
-                                    ref={provided.innerRef}>
-                                    <h2 className="text-lg font-bold mb-4">Done</h2>
-                                    {getList("done").map((task, index) => (
-                                        <Draggable
-                                            key={task.id}
-                                            draggableId={task.id.toString()}
-                                            index={tasks.findIndex((t) => t.id === task.id)}>
-                                            {(provided) => (
-                                                <div
-                                                    {...provided.draggableProps}
-                                                    {...provided.dragHandleProps}
-                                                    ref={provided.innerRef}
-                                                    className="bg-white p-2 rounded-lg shadow-md mb-2">
-                                                    <p>{task.text}</p>
-                                                    <button
-                                                        className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg mt-2"
-                                                        onClick={() => handleDelete(task.id)}>
-                                                        Delete
-                                                    </button>
-                                                </div>
-                                            )}
-                                        </Draggable>
-                                    ))}
-                                    {provided.placeholder}
-                                </div>
-                            )}
-                        </Droppable>
-                    </div>
-                </DragDropContext>
-            </div>
-            <form onSubmit={handleSubmit}>
-                <div className="flex justify-center mt-4">
-                    <input
-                        type="text"
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        className="p-2 border-2 border-gray-500 rounded-l-md"/>
-                    <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md">
-                        Ajouter
-                    </button>
+        <>
+            <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
+                <div className="flex justify-center">
+                    <DragDropContext onDragEnd={handleDragEnd} handleDragStart={handleDragStart}>
+                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-16 lg:space-y-0 mt-28">
+                            <Droppable droppableId="todo">
+                                {(provided) => (
+                                    <div
+                                        className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto h-fit"
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}>
+                                        <h2 className="text-lg font-bold mb-4">Todo</h2>
+                                        {getList("todo").map((task, index) => getDraggable(tasks, task, setTasks))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                            <Droppable droppableId="doing">
+                                {(provided) => (
+                                    <div
+                                        className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto h-fit"
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}>
+                                        <h2 className="text-lg font-bold mb-4">Doing</h2>
+                                        {getList("doing").map((task, index) => getDraggable(tasks, task, setTasks))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                            <Droppable droppableId="done">
+                                {(provided) => (
+                                    <div
+                                        className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto h-fit"
+                                        {...provided.droppableProps}
+                                        ref={provided.innerRef}>
+                                        <h2 className="text-lg font-bold mb-4">Done</h2>
+                                        {getList("done").map((task, index) => getDraggable(tasks, task, setTasks))}
+                                        {provided.placeholder}
+                                    </div>
+                                )}
+                            </Droppable>
+                        </div>
+                    </DragDropContext>
                 </div>
-            </form>
-        </main>
+                <form onSubmit={handleSubmit}>
+                    <div className="flex justify-center py-8">
+                        <input
+                            type="text"
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            className="p-2 border-2 border-gray-500 rounded-l-md"/>
+                        <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md">
+                            Ajouter
+                        </button>
+                    </div>
+                </form>
+            </main>
+        </>
     );
 }
 

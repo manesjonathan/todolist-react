@@ -10,7 +10,7 @@ module.exports = {
                 'main-bg': "url('/src/assets/pictures/bg.webp')",
             }),
             height: {
-                'screen-custom': 'calc(var(--vh, 1vh) * 100 - 3rem)',
+                'screen-custom': 'calc(var(--vh, 1vh) * 100)',
             },
         },
     },
