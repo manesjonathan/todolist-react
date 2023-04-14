@@ -6,7 +6,6 @@ import getDraggable from "../components/TaskDisplay.jsx";
 function TodoApp() {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const [sourceColumn, setSourceColumn] = useState("");
 
     useEffect(() => {
         getTasks().then((response) => {
@@ -14,13 +13,7 @@ function TodoApp() {
         });
     }, []);
 
-    const handleDragStart = (result) => {
-        setSourceColumn(result.source.droppableId);
-    };
-
     const handleDragEnd = (result) => {
-        setSourceColumn("");
-
         if (!result.destination) return;
 
         const newTasks = Array.from(tasks);
@@ -59,7 +52,7 @@ function TodoApp() {
         <>
             <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
                 <div className="flex justify-center">
-                    <DragDropContext onDragEnd={handleDragEnd} handleDragStart={handleDragStart}>
+                    <DragDropContext onDragEnd={handleDragEnd} >
                         <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-16 lg:space-y-0 mt-28">
                             <Droppable droppableId="todo">
                                 {(provided) => (
@@ -68,7 +61,7 @@ function TodoApp() {
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
                                         <h2 className="text-lg font-bold mb-4">Todo</h2>
-                                        {getList("todo").map((task, index) => getDraggable(tasks, task, setTasks))}
+                                        {getList("todo").map((task) => getDraggable(tasks, task, setTasks))}
                                         {provided.placeholder}
                                     </div>
                                 )}
@@ -80,7 +73,7 @@ function TodoApp() {
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
                                         <h2 className="text-lg font-bold mb-4">Doing</h2>
-                                        {getList("doing").map((task, index) => getDraggable(tasks, task, setTasks))}
+                                        {getList("doing").map((task) => getDraggable(tasks, task, setTasks))}
                                         {provided.placeholder}
                                     </div>
                                 )}
@@ -92,7 +85,7 @@ function TodoApp() {
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
                                         <h2 className="text-lg font-bold mb-4">Done</h2>
-                                        {getList("done").map((task, index) => getDraggable(tasks, task, setTasks))}
+                                        {getList("done").map((task) => getDraggable(tasks, task, setTasks))}
                                         {provided.placeholder}
                                     </div>
                                 )}
