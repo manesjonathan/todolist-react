@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {registerFunction} from "./backend.js";
+import {registerFunction} from "./../backend/backend.js";
 import {useNavigate} from "react-router-dom";
 
 function Register() {
@@ -91,6 +91,18 @@ function Register() {
                             />
                         </div>
                     </div>
+
+                    <div className="flex items-center justify-end">
+
+
+                        <div className="text-sm">
+                            <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
+                                Déja un compte?
+                            </a>
+                        </div>
+                    </div>
+
+
                     <div>
                         <button
                             type="submit"

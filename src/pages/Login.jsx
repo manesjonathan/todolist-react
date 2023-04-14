@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import {loginFunction} from "./backend.js";
+import {loginFunction} from "./../backend/backend.js";
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -66,22 +66,12 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                            />
-                            <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                                Remember me
-                            </label>
-                        </div>
+                    <div className="flex items-center justify-end">
+
 
                         <div className="text-sm">
                             <a href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                               Pas de compte?
+                               Créer un compte
                             </a>
                         </div>
                     </div>

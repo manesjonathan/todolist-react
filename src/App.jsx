@@ -1,8 +1,8 @@
-import TodoApp from "./TodoApp.jsx";
+import TodoApp from "./pages/TodoApp.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
-import PrivateRoute from "./PrivateRoute.jsx";
-import Login from "./Login.jsx";
-import Register from "./Register.jsx";
+import PrivateRoute from "./pages/PrivateRoute.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 
 const App = () => {
 

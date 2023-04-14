@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
-import './index.css';
-import {createTask, deleteTask, getTasks, updateTask} from "./backend.js";
+import {createTask, deleteTask, getTasks, updateTask} from "./../backend/backend.js";
 
 function TodoApp() {
     const [tasks, setTasks] = useState([]);
