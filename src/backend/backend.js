@@ -48,3 +48,9 @@ export const updateTask = (id, text, status) => {
     }).then(res => {
     });
 }
+
+export const logout = (email) => {
+    return axios.post(`${url}api/logout`, {
+        email: email
+    });
+}

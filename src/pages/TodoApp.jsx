@@ -73,11 +73,11 @@ function TodoApp() {
             </header>
             <div className="flex justify-center mt-4">
                 <DragDropContext onDragEnd={handleDragEnd} handleDragStart={handleDragStart}>
-                    <div className="flex space-y-4 lg:space-x-4 lg:space-y-0 flex-col lg:flex-row ">
+                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 lg:space-y-0 ">
                         <Droppable droppableId="todo">
                             {(provided) => (
                                 <div
-                                    className="bg-gray-100 p-4 rounded-lg w-80 max-h-screen overflow-y-auto"
+                                    className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto"
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}>
                                     <h2 className="text-lg font-bold mb-4">Todo</h2>
@@ -85,8 +85,7 @@ function TodoApp() {
                                         <Draggable
                                             key={task.id}
                                             draggableId={task.id.toString()}
-                                            index={tasks.findIndex((t) => t.id === task.id)}
-                                        >
+                                            index={tasks.findIndex((t) => t.id === task.id)}>
                                             {(provided) => (
                                                 <div
                                                     {...provided.draggableProps}
@@ -110,7 +109,7 @@ function TodoApp() {
                         <Droppable droppableId="doing">
                             {(provided) => (
                                 <div
-                                    className="bg-gray-100 p-4 rounded-lg w-80 max-h-screen overflow-y-auto"
+                                    className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto"
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}>
                                     <h2 className="text-lg font-bold mb-4">Doing</h2>
@@ -118,8 +117,7 @@ function TodoApp() {
                                         <Draggable
                                             key={task.id}
                                             draggableId={task.id.toString()}
-                                            index={tasks.findIndex((t) => t.id === task.id)}
-                                        >
+                                            index={tasks.findIndex((t) => t.id === task.id)}>
                                             {(provided) => (
                                                 <div
                                                     {...provided.draggableProps}
@@ -143,7 +141,7 @@ function TodoApp() {
                         <Droppable droppableId="done">
                             {(provided) => (
                                 <div
-                                    className="bg-gray-100 p-4 rounded-lg w-80 max-h-screen overflow-y-auto"
+                                    className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto"
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}>
                                     <h2 className="text-lg font-bold mb-4">Done</h2>
@@ -151,8 +149,7 @@ function TodoApp() {
                                         <Draggable
                                             key={task.id}
                                             draggableId={task.id.toString()}
-                                            index={tasks.findIndex((t) => t.id === task.id)}
-                                        >
+                                            index={tasks.findIndex((t) => t.id === task.id)}>
                                             {(provided) => (
                                                 <div
                                                     {...provided.draggableProps}
@@ -184,7 +181,7 @@ function TodoApp() {
                         onChange={(e) => setInputValue(e.target.value)}
                         className="p-2 border-2 border-gray-500 rounded-l-md"/>
                     <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md">
-                        Add
+                        Ajouter
                     </button>
                 </div>
             </form>
