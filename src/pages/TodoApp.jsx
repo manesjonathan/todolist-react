@@ -67,13 +67,10 @@ function TodoApp() {
     };
 
     return (
-        <div className="App">
-            <header className="bg-gray-800 text-white py-2">
-                <h1 className="text-2xl font-bold text-center">Todo List</h1>
-            </header>
-            <div className="flex justify-center mt-4">
+        <main className="mt-12 bg-main-bg bg-no-repeat bg-cover h-screen-custom">
+            <div className="flex justify-center">
                 <DragDropContext onDragEnd={handleDragEnd} handleDragStart={handleDragStart}>
-                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 lg:space-y-0 ">
+                    <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-16 lg:space-y-0 mt-14">
                         <Droppable droppableId="todo">
                             {(provided) => (
                                 <div
@@ -185,7 +182,7 @@ function TodoApp() {
                     </button>
                 </div>
             </form>
-        </div>
+        </main>
     );
 }
 
