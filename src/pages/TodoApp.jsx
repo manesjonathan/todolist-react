@@ -53,43 +53,49 @@ function TodoApp() {
             <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
                 <div className="flex justify-center">
                     <DragDropContext onDragEnd={handleDragEnd} >
-                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-16 lg:space-y-0 mt-28">
-                            <Droppable droppableId="todo">
-                                {(provided) => (
-                                    <div
-                                        className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto h-fit"
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}>
-                                        <h2 className="text-lg font-bold mb-4">Todo</h2>
-                                        {getList("todo").map((task) => getDraggable(tasks, task, setTasks))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                            <Droppable droppableId="doing">
-                                {(provided) => (
-                                    <div
-                                        className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto h-fit"
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}>
-                                        <h2 className="text-lg font-bold mb-4">Doing</h2>
-                                        {getList("doing").map((task) => getDraggable(tasks, task, setTasks))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
-                            <Droppable droppableId="done">
-                                {(provided) => (
-                                    <div
-                                        className="bg-gray-100 p-4 rounded-lg min-w-[20rem] max-h-screen overflow-y-auto h-fit"
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}>
-                                        <h2 className="text-lg font-bold mb-4">Done</h2>
-                                        {getList("done").map((task) => getDraggable(tasks, task, setTasks))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
+                        <div className="mt-28 flex flex-col lg:grid lg:grid-cols-3 gap-8 space-y-4 lg:space-y-0" >
+                            <div className="w-full">
+                                <Droppable droppableId="todo">
+                                    {(provided) => (
+                                        <div
+                                            className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}>
+                                            <h2 className="text-lg font-bold mb-4">A Faire</h2>
+                                            {getList("todo").map((task) => getDraggable(tasks, task, setTasks))}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </div>
+                            <div className="w-full">
+                                <Droppable droppableId="doing">
+                                    {(provided) => (
+                                        <div
+                                            className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}>
+                                            <h2 className="text-lg font-bold mb-4">En Cours</h2>
+                                            {getList("doing").map((task) => getDraggable(tasks, task, setTasks))}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </div>
+                            <div className="w-full">
+                                <Droppable droppableId="done">
+                                    {(provided) => (
+                                        <div
+                                            className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
+                                            {...provided.droppableProps}
+                                            ref={provided.innerRef}>
+                                            <h2 className="text-lg font-bold mb-4">Fini</h2>
+                                            {getList("done").map((task) => getDraggable(tasks, task, setTasks))}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </div>
                         </div>
                     </DragDropContext>
                 </div>
@@ -106,6 +112,7 @@ function TodoApp() {
                     </div>
                 </form>
             </main>
+
         </>
     );
 }
