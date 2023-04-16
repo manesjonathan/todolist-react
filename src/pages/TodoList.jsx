@@ -3,12 +3,13 @@ import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import {createTask, getTasks, updateTask} from "./../backend/backend.js";
 import getDraggable from "../components/TaskDisplay.jsx";
 
-function TodoApp() {
+function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
 
     useEffect(() => {
         getTasks().then((response) => {
+            response.sort((a, b) => a.position - b.position);
             setTasks(response);
         });
     }, []);
@@ -24,12 +25,17 @@ function TodoApp() {
         } else {
             newTasks.splice(result.destination.index, 0, {...removed, status: result.destination.droppableId});
         }
+
         const taskId = removed.id;
         const newStatus = result.destination.droppableId;
         const text = removed.text;
-        updateTask(taskId, text, newStatus)
+        const newPosition = result.destination.index; // new position of the dragged item
+        console.log("newPosition: " + newPosition);
+        updateTask(taskId, text, newStatus, newPosition); // update the task in the database
+
         setTasks(newTasks);
     }
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -41,8 +47,9 @@ function TodoApp() {
 
             text: inputValue.trim(),
             status: 'todo',
+            position: tasks.length
         };
-        createTask(inputValue.trim(), "todo");
+        createTask(inputValue.trim(), "todo", tasks.length);
         setTasks([...tasks, newTodo]);
         setInputValue('');
     };
@@ -52,8 +59,8 @@ function TodoApp() {
         <>
             <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
                 <div className="flex justify-center">
-                    <DragDropContext onDragEnd={handleDragEnd} >
-                        <div className="mt-28 flex flex-col lg:grid lg:grid-cols-3 gap-8 space-y-4 lg:space-y-0" >
+                    <DragDropContext onDragEnd={handleDragEnd}>
+                        <div className="mt-28 flex flex-col lg:grid lg:grid-cols-3 gap-8 space-y-4 lg:space-y-0">
                             <div className="w-full">
                                 <Droppable droppableId="todo">
                                     {(provided) => (
@@ -117,4 +124,4 @@ function TodoApp() {
     );
 }
 
-export default TodoApp;
+export default TodoList;

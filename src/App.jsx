@@ -1,4 +1,4 @@
-import TodoApp from "./pages/TodoApp.jsx";
+import TodoList from "./pages/TodoList.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import PrivateRoute from "./pages/PrivateRoute.jsx";
 import Login from "./pages/Login.jsx";
@@ -6,6 +6,7 @@ import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
 import CalendarView from "./pages/CalendarView.jsx";
+import Courses from "./pages/Courses.jsx";
 const App = () => {
     return (
         <BrowserRouter>
@@ -15,13 +16,19 @@ const App = () => {
                 <Route path="/home" element={
                     <PrivateRoute>
                         <Navbar/>
-                        <TodoApp/>
+                        <TodoList/>
                     </PrivateRoute>
                 }/>
                 <Route path="/calendar" element={
                     <PrivateRoute>
                         <Navbar/>
                         <CalendarView/>
+                    </PrivateRoute>
+                }/>
+                <Route path="/courses" element={
+                    <PrivateRoute>
+                        <Navbar/>
+                        <Courses/>
                     </PrivateRoute>
                 }/>
                 <Route path={"/logout"} element={<Logout/>}/>

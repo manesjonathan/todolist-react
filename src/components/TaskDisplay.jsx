@@ -26,7 +26,7 @@ const getDraggable = (tasks, task, setTasks) => {
     };
 
     const handleEdit = (text) => {
-        updateTask(task.id, text.value, task.status);
+        updateTask(task.id, text.value, task.status, task.position);
 
     }
 

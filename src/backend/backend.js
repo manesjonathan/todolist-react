@@ -22,10 +22,11 @@ export const registerFunction = (email, password, navigate) => {
     });
 }
 
-export const createTask = (text, status) => {
+export const createTask = (text, status, position) => {
     return axios.post(`${url}api/create-task`, {
         text: text,
-        status: status
+        status: status,
+        position: position
     }).then(res => {
     });
 }
@@ -41,10 +42,11 @@ export const deleteTask = (id) => {
     });
 }
 
-export const updateTask = (id, text, status) => {
+export const updateTask = (id, text, status, position) => {
     return axios.put(`${url}api/tasks/${id}`, {
         text: text,
-        status: status
+        status: status,
+        position: position
     }).then(res => {
     });
 }
