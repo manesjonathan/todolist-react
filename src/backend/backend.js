@@ -6,7 +6,7 @@ export const loginFunction = (email, password, navigate) => {
         email: email,
         password: password
     }).then(res => {
-        sessionStorage.setItem('user', res.data);
+        localStorage.setItem('sessionData', JSON.stringify(res.data));
         navigate('/home');
     });
 }
@@ -16,7 +16,7 @@ export const registerFunction = (email, password, navigate) => {
         email: email,
         password: password
     }).then(res => {
-        sessionStorage.setItem('user', res.data);
+        localStorage.setItem('sessionData', JSON.stringify(res.data));
         navigate('/home');
     });
 }
@@ -26,18 +26,30 @@ export const createTask = (text, status, position) => {
         text: text,
         status: status,
         position: position
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
     }).then(res => {
     });
 }
 
 export const getTasks = () => {
-    return axios.get(`${URL}api/tasks`).then(res => {
+    return axios.get(`${URL}api/tasks`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
         return res.data;
     });
 }
 
 export const deleteTask = (id) => {
-    return axios.delete(`${URL}api/tasks/${id}`).then(res => {
+    return axios.delete(`${URL}api/tasks/${id}`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
     });
 }
 
@@ -46,12 +58,20 @@ export const updateTask = (id, text, status, position) => {
         text: text,
         status: status,
         position: position
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
     }).then(res => {
     });
 }
 
 export const getItems = () => {
-    return axios.get(`${URL}api/items`).then(res => {
+    return axios.get(`${URL}api/items`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
         return res.data;
     });
 }
@@ -61,12 +81,20 @@ export const createItem = (name, quantity, position) => {
         name: name,
         quantity: quantity,
         position: position
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
     }).then(res => {
     });
 }
 
 export const deleteItem = (id) => {
-    return axios.delete(`${URL}api/items/${id}`).then(res => {
+    return axios.delete(`${URL}api/items/${id}`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
     });
 }
 
@@ -75,6 +103,10 @@ export const updateItem = (id, name, quantity, position) => {
         name: name,
         quantity: quantity,
         position: position
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
     }).then(res => {
     });
 }
@@ -82,5 +114,12 @@ export const updateItem = (id, name, quantity, position) => {
 export const logout = (email) => {
     return axios.post(`${URL}api/logout`, {
         email: email
-    });
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
+            localStorage.removeItem('sessionData');
+        }
+    );
 }
