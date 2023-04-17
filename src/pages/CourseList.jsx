@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import {FaTrash} from "react-icons/fa";
 import Swal from "sweetalert2";
-import {deleteTask} from "../backend/backend.js";
+import {createItem, deleteItem, getItems, updateItem} from "../backend/backend.js";
 
 function ShoppingList() {
     const [items, setItems] = useState([]);
@@ -11,19 +11,24 @@ function ShoppingList() {
     useEffect(() => {
         // Fetch items from backend
         // Example code: fetchItems().then((response) => setItems(response));
+        getItems().then((response) => {
+            response.sort((a, b) => a.position - b.position);
+            setItems(response);
+        });
     }, []);
 
     const handleDragEnd = (result) => {
         if (!result.destination) return;
 
         const newItems = Array.from(items);
-        const [removed] = newItems.splice(result.source.index, 1);
+        const [currentItem] = newItems.splice(result.source.index, 1);
 
-        newItems.splice(result.destination.index, 0, removed);
+        newItems.splice(result.destination.index, 0, currentItem);
         setItems(newItems);
 
-        // Update item order in backend
-        // Example code: updateItemOrder(newItems);
+        //todo update position in backend
+        let position = result.destination.index;
+        updateItem(currentItem.id, currentItem.name, currentItem.quantity, position);
     };
 
     const handleDelete = (id) => {
@@ -37,11 +42,10 @@ function ShoppingList() {
             confirmButtonText: 'Oui, supprime-le!'
         }).then((result) => {
             if (result.isConfirmed) {
-                //deleteTask(id);
                 setItems(items.filter((item) => item.id !== id));
+                deleteItem(id);
             }
         })
-
     };
 
     const handleSubmit = (e) => {
@@ -53,19 +57,25 @@ function ShoppingList() {
             id: Math.random().toString(36).substr(2, 9),
             name: inputValue.trim(),
             quantity: 1,
+            position: items.length,
         };
         // Add item to backend
         // Example code: addItem(newItem);
         setItems([...items, newItem]);
         setInputValue("");
+        createItem(newItem.name, newItem.quantity, newItem.position);
     };
 
-    const handleQuantityChange = (id, quantity) => {
+    function updateQuantity(item, quantity) {
         const newItems = [...items];
-        const index = newItems.findIndex((item) => item.id === id);
-        newItems[index].quantity = quantity;
+        const itemIndex = newItems.findIndex(
+            (newItem) => newItem.id === item.id
+        );
+        newItems[itemIndex].quantity = quantity;
         setItems(newItems);
-    };
+        console.log(quantity);
+        updateItem(newItems[itemIndex].id, newItems[itemIndex].name, quantity, newItems[itemIndex].position);
+    }
 
     return (
         <>
@@ -98,12 +108,8 @@ function ShoppingList() {
                                                                 <button
                                                                     className="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded-lg mt-2"
                                                                     onClick={() => {
-                                                                        const newItems = [...items];
-                                                                        const itemIndex = newItems.findIndex(
-                                                                            (newItem) => newItem.id === item.id
-                                                                        );
-                                                                        newItems[itemIndex].quantity--;
-                                                                        setItems(newItems);
+                                                                        updateQuantity(item, item.quantity - 1);
+
                                                                     }}>
                                                                     -
                                                                 </button>
@@ -113,12 +119,8 @@ function ShoppingList() {
                                                                 <button
                                                                     className="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded-lg mt-2"
                                                                     onClick={() => {
-                                                                        const newItems = [...items];
-                                                                        const itemIndex = newItems.findIndex(
-                                                                            (newItem) => newItem.id === item.id
-                                                                        );
-                                                                        newItems[itemIndex].quantity++;
-                                                                        setItems(newItems);
+                                                                        updateQuantity(item, item.quantity + 1);
+
                                                                     }}>
                                                                     +
                                                                 </button>

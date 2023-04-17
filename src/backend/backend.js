@@ -1,9 +1,8 @@
 import axios from "axios";
-
-const url = `https://api.jonathan-manes.be/`;
+import {URL} from "./config.js";
 
 export const loginFunction = (email, password, navigate) => {
-    return axios.post(`https://api.jonathan-manes.be/login`, {
+    return axios.post(`${URL}login`, {
         email: email,
         password: password
     }).then(res => {
@@ -13,7 +12,7 @@ export const loginFunction = (email, password, navigate) => {
 }
 export const registerFunction = (email, password, navigate) => {
     console.log(email, password)
-    return axios.post(`https://api.jonathan-manes.be/register`, {
+    return axios.post(`${URL}register`, {
         email: email,
         password: password
     }).then(res => {
@@ -23,7 +22,7 @@ export const registerFunction = (email, password, navigate) => {
 }
 
 export const createTask = (text, status, position) => {
-    return axios.post(`${url}api/create-task`, {
+    return axios.post(`${URL}api/create-task`, {
         text: text,
         status: status,
         position: position
@@ -32,18 +31,18 @@ export const createTask = (text, status, position) => {
 }
 
 export const getTasks = () => {
-    return axios.get(`${url}api/tasks`).then(res => {
+    return axios.get(`${URL}api/tasks`).then(res => {
         return res.data;
     });
 }
 
 export const deleteTask = (id) => {
-    return axios.delete(`${url}api/tasks/${id}`).then(res => {
+    return axios.delete(`${URL}api/tasks/${id}`).then(res => {
     });
 }
 
 export const updateTask = (id, text, status, position) => {
-    return axios.put(`${url}api/tasks/${id}`, {
+    return axios.put(`${URL}api/tasks/${id}`, {
         text: text,
         status: status,
         position: position
@@ -51,8 +50,37 @@ export const updateTask = (id, text, status, position) => {
     });
 }
 
+export const getItems = () => {
+    return axios.get(`${URL}api/items`).then(res => {
+        return res.data;
+    });
+}
+
+export const createItem = (name, quantity, position) => {
+    return axios.post(`${URL}api/create-item`, {
+        name: name,
+        quantity: quantity,
+        position: position
+    }).then(res => {
+    });
+}
+
+export const deleteItem = (id) => {
+    return axios.delete(`${URL}api/items/${id}`).then(res => {
+    });
+}
+
+export const updateItem = (id, name, quantity, position) => {
+    return axios.put(`${URL}api/items/${id}`, {
+        name: name,
+        quantity: quantity,
+        position: position
+    }).then(res => {
+    });
+}
+
 export const logout = (email) => {
-    return axios.post(`${url}api/logout`, {
+    return axios.post(`${URL}api/logout`, {
         email: email
     });
 }

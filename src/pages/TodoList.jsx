@@ -18,20 +18,19 @@ function TodoList() {
         if (!result.destination) return;
 
         const newTasks = Array.from(tasks);
-        const [removed] = newTasks.splice(result.source.index, 1);
+        const [currentTask] = newTasks.splice(result.source.index, 1);
 
         if (result.source.droppableId === result.destination.droppableId) {
-            newTasks.splice(result.destination.index, 0, removed);
+            newTasks.splice(result.destination.index, 0, currentTask);
         } else {
-            newTasks.splice(result.destination.index, 0, {...removed, status: result.destination.droppableId});
+            newTasks.splice(result.destination.index, 0, {...currentTask, status: result.destination.droppableId});
         }
 
-        const taskId = removed.id;
+        const taskId = currentTask.id;
         const newStatus = result.destination.droppableId;
-        const text = removed.text;
-        const newPosition = result.destination.index; // new position of the dragged item
-        console.log("newPosition: " + newPosition);
-        updateTask(taskId, text, newStatus, newPosition); // update the task in the database
+        const text = currentTask.text;
+        const newPosition = result.destination.index;
+        updateTask(taskId, text, newStatus, newPosition);
 
         setTasks(newTasks);
     }

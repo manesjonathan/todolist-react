@@ -6,7 +6,7 @@ import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
 import CalendarView from "./pages/CalendarView.jsx";
-import Courses from "./pages/Courses.jsx";
+import CourseList from "./pages/CourseList.jsx";
 const App = () => {
     return (
         <BrowserRouter>
@@ -28,7 +28,7 @@ const App = () => {
                 <Route path="/courses" element={
                     <PrivateRoute>
                         <Navbar/>
-                        <Courses/>
+                        <CourseList/>
                     </PrivateRoute>
                 }/>
                 <Route path={"/logout"} element={<Logout/>}/>
