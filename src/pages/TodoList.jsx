@@ -6,6 +6,7 @@ import getDraggable from "../components/TaskDisplay.jsx";
 function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
+    const [selectedDateTime, setSelectedDateTime] = useState('');
 
     useEffect(() => {
         getTasks().then((response) => {
@@ -30,7 +31,7 @@ function TodoList() {
         const newStatus = result.destination.droppableId;
         const text = currentTask.text;
         const newPosition = result.destination.index;
-        updateTask(taskId, text, newStatus, newPosition);
+        updateTask(taskId, text, newStatus, newPosition, currentTask.end_date);
 
         setTasks(newTasks);
     }
@@ -43,15 +44,17 @@ function TodoList() {
         }
         const newTodo = {
             id: Math.random().toString(36).substr(2, 9),
-
             text: inputValue.trim(),
             status: 'todo',
-            position: tasks.length
+            position: tasks.length,
+            end_date: selectedDateTime
         };
-        createTask(inputValue.trim(), "todo", tasks.length);
+        createTask(inputValue.trim(), "todo", tasks.length, new Date(selectedDateTime));
         setTasks([...tasks, newTodo]);
         setInputValue('');
+        setSelectedDateTime(null);
     };
+
     const getList = (status) => tasks.filter((task) => task.status === status);
 
     return (
@@ -66,7 +69,8 @@ function TodoList() {
                                         <div
                                             className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
                                             {...provided.droppableProps}
-                                            ref={provided.innerRef}>
+                                            ref={provided.innerRef}
+                                        >
                                             <h2 className="text-lg font-bold mb-4">A Faire</h2>
                                             {getList("todo").map((task) => getDraggable(tasks, task, setTasks))}
                                             {provided.placeholder}
@@ -80,7 +84,8 @@ function TodoList() {
                                         <div
                                             className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
                                             {...provided.droppableProps}
-                                            ref={provided.innerRef}>
+                                            ref={provided.innerRef}
+                                        >
                                             <h2 className="text-lg font-bold mb-4">En Cours</h2>
                                             {getList("doing").map((task) => getDraggable(tasks, task, setTasks))}
                                             {provided.placeholder}
@@ -94,7 +99,8 @@ function TodoList() {
                                         <div
                                             className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
                                             {...provided.droppableProps}
-                                            ref={provided.innerRef}>
+                                            ref={provided.innerRef}
+                                        >
                                             <h2 className="text-lg font-bold mb-4">Fini</h2>
                                             {getList("done").map((task) => getDraggable(tasks, task, setTasks))}
                                             {provided.placeholder}
@@ -111,16 +117,22 @@ function TodoList() {
                             type="text"
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
-                            className="p-2 border-2 border-gray-500 rounded-l-md"/>
+                            className="p-2 border-2 border-gray-500 rounded-l-md"
+                        />
+                        <input
+                            type="datetime-local"
+                            onChange={(e) => setSelectedDateTime(e.target.value)}
+                            className="p-2 border-2 border-gray-500"
+                        />
                         <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md">
                             Ajouter
                         </button>
                     </div>
                 </form>
             </main>
-
         </>
     );
+
 }
 
 export default TodoList;

@@ -21,18 +21,27 @@ export const registerFunction = (email, password, navigate) => {
     });
 }
 
-export const createTask = (text, status, position) => {
-    return axios.post(`${URL}api/create-task`, {
+export const createTask = (text, status, position, timestamp) => {
+    const headers = {
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData')),
+    };
+
+    const data = {
         text: text,
         status: status,
-        position: position
-    }, {
-        headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
-        }
-    }).then(res => {
-    });
-}
+        position: position,
+        end_date: timestamp
+    };
+
+    return axios.post(`${URL}api/create-task`, data, {headers: headers})
+        .then(res => {
+            // handle response
+        })
+        .catch(error => {
+            // handle error
+        });
+};
+
 
 export const getTasks = () => {
     return axios.get(`${URL}api/tasks`, {
@@ -53,16 +62,18 @@ export const deleteTask = (id) => {
     });
 }
 
-export const updateTask = (id, text, status, position) => {
+export const updateTask = (id, text, status, position, endDate) => {
     return axios.put(`${URL}api/tasks/${id}`, {
         text: text,
         status: status,
-        position: position
+        position: position,
+        end_date: endDate.toISOString()
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
     }).then(res => {
+        console.log(res.data)
     });
 }
 
