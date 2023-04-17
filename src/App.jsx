@@ -7,6 +7,8 @@ import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
 import CalendarView from "./pages/CalendarView.jsx";
 import CourseList from "./pages/ShoppingList.jsx";
+import PromiseList from "./pages/PromiseList.jsx";
+
 const App = () => {
     return (
         <BrowserRouter>
@@ -29,6 +31,12 @@ const App = () => {
                     <PrivateRoute>
                         <Navbar/>
                         <CourseList/>
+                    </PrivateRoute>
+                }/>
+                <Route path="/promises" element={
+                    <PrivateRoute>
+                        <Navbar/>
+                        <PromiseList/>
                     </PrivateRoute>
                 }/>
                 <Route path={"/logout"} element={<Logout/>}/>

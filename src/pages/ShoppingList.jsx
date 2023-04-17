@@ -26,7 +26,6 @@ function ShoppingList() {
         newItems.splice(result.destination.index, 0, currentItem);
         setItems(newItems);
 
-        //todo update position in backend
         let position = result.destination.index;
         updateItem(currentItem.id, currentItem.name, currentItem.quantity, position, currentItem.end_date);
     };
@@ -59,8 +58,7 @@ function ShoppingList() {
             quantity: 1,
             position: items.length,
         };
-        // Add item to backend
-        // Example code: addItem(newItem);
+
         setItems([...items, newItem]);
         setInputValue("");
         createItem(newItem.name, newItem.quantity, newItem.position);

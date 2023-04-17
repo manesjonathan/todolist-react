@@ -44,6 +44,11 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <a className={'px-3 py-2 flex text-xs uppercase font-bold leading-snug hover:opacity-75 cursor-pointer'}
+                                   href={'/promises'}>Promesses
+                                </a>
+                            </li>
+                            <li>
+                                <a className={'px-3 py-2 flex text-xs uppercase font-bold leading-snug hover:opacity-75 cursor-pointer'}
                                    href={'/logout'}>Logout
                                 </a>
                             </li>

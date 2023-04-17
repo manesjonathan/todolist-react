@@ -6,9 +6,7 @@ export default defineConfig({
     plugins: [
         react(),
         VitePWA({
-            devOptions: {
-                enabled: true
-            },
+            registerType: 'autoUpdate',
             manifest: {
                 name: 'Todo App',
                 short_name: 'Todo list Web App',
