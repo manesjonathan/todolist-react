@@ -6,7 +6,7 @@ import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
 import CalendarView from "./pages/CalendarView.jsx";
-import CourseList from "./pages/CourseList.jsx";
+import CourseList from "./pages/ShoppingList.jsx";
 const App = () => {
     return (
         <BrowserRouter>

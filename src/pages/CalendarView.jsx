@@ -8,10 +8,12 @@ const CalendarView = () => {
         setDateState(e)
     }
     return (
-        <Calendar
-            value={dateState}
-            onChange={changeDate}
-        />
+        <div className={'flex mt-28 items-center justify-center w-full'}>
+            <Calendar
+                value={dateState}
+                onChange={changeDate}
+            />
+        </div>
     )
 }
 export default CalendarView

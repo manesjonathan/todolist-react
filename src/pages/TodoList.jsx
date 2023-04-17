@@ -31,7 +31,7 @@ function TodoList() {
         const newStatus = result.destination.droppableId;
         const text = currentTask.text;
         const newPosition = result.destination.index;
-        updateTask(taskId, text, newStatus, newPosition, currentTask.end_date);
+        updateTask(taskId, text, newStatus, newPosition, currentTask.end_date ?? null);
 
         setTasks(newTasks);
     }
@@ -47,9 +47,9 @@ function TodoList() {
             text: inputValue.trim(),
             status: 'todo',
             position: tasks.length,
-            end_date: selectedDateTime
+            end_date: selectedDateTime ? selectedDateTime : null
         };
-        createTask(inputValue.trim(), "todo", tasks.length, new Date(selectedDateTime));
+        createTask(inputValue.trim(), "todo", tasks.length, selectedDateTime !== '' ? selectedDateTime : null);
         setTasks([...tasks, newTodo]);
         setInputValue('');
         setSelectedDateTime(null);

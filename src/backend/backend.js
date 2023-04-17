@@ -67,13 +67,12 @@ export const updateTask = (id, text, status, position, endDate) => {
         text: text,
         status: status,
         position: position,
-        end_date: endDate.toISOString()
+        end_date: endDate
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
     }).then(res => {
-        console.log(res.data)
     });
 }
 

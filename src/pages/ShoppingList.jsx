@@ -28,7 +28,7 @@ function ShoppingList() {
 
         //todo update position in backend
         let position = result.destination.index;
-        updateItem(currentItem.id, currentItem.name, currentItem.quantity, position);
+        updateItem(currentItem.id, currentItem.name, currentItem.quantity, position, currentItem.end_date);
     };
 
     const handleDelete = (id) => {
@@ -83,14 +83,15 @@ function ShoppingList() {
                 <div className="flex justify-center">
                     <DragDropContext onDragEnd={handleDragEnd}>
                         <div className="mt-28 flex flex-col text-center">
-                            <h2 className="text-2xl font-bold mb-4 text-gray-50">Shopping List</h2>
+                            <h2 className="text-2xl font-bold mb-4 text-gray-50 uppercase">Liste de courses</h2>
                             <Droppable droppableId="items">
                                 {(provided) => (
                                     <div
                                         className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
                                         {...provided.droppableProps}
                                         ref={provided.innerRef}>
-                                        {items && <p className="text-gray-500 text-sm mb-2">Ajoute des articles</p>}
+                                        {items.length === 0 &&
+                                            <p className="text-gray-500 text-sm mb-2">Ajoute des articles</p>}
                                         {items.map((item, index) => (
                                             <Draggable
                                                 key={item.id}

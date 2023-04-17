@@ -25,7 +25,7 @@ const getDraggable = (tasks, task, setTasks) => {
     };
 
     const handleEditText = (text) => {
-        updateTask(task.id, text.value, task.status, task.position, task.end_date);
+        updateTask(task.id, text.value, task.status, task.position, task.end_date ?? null);
 
     }
 
@@ -40,7 +40,7 @@ const getDraggable = (tasks, task, setTasks) => {
         const minute = parseInt(timeParts[1], 10);
 
         const dateToSave = new Date(year, month, day, hour, minute);
-        updateTask(task.id, task.text, task.status, task.position, dateToSave);
+        updateTask(task.id, task.text, task.status, task.position, dateToSave.toISOString());
     }
 
     return <Draggable
@@ -62,7 +62,7 @@ const getDraggable = (tasks, task, setTasks) => {
                     <div className="text-gray-500 text-xs">
                         <EditText
                             name="textbox"
-                            defaultValue={task.end_date ? new Date(task.end_date).toLocaleString().substring(0, 16) : new Date().toLocaleString().substring(0, 16)}
+                            defaultValue={task.end_date !== null ? new Date(task.end_date).toLocaleString().substring(0, 16) : new Date().toLocaleString().substring(0, 16)}
                             onSave={handleEditDate}
                         />
                     </div>
@@ -80,7 +80,6 @@ const getDraggable = (tasks, task, setTasks) => {
             );
         }}
     </Draggable>
-        ;
 }
 
 export default getDraggable;
