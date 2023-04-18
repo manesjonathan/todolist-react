@@ -10,8 +10,6 @@ const Login = () => {
 
     const handleLogin = (event) => {
         event.preventDefault();
-        // Here you can write the logic to check if the email and password are correct
-        // make API call to authenticate user and set user state
         try {
             loginFunction(email, password, navigate).catch(() => {
                 setError("Invalid email or password");

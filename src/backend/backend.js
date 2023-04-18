@@ -21,6 +21,20 @@ export const registerFunction = (email, password, navigate) => {
     });
 }
 
+export const logout = (email) => {
+    return axios.post(`${URL}api/logout`, {
+        email: email
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
+            localStorage.removeItem('sessionData');
+        }
+    );
+}
+
+
 export const createTask = (text, status, position, timestamp) => {
     const headers = {
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData')),
@@ -121,15 +135,69 @@ export const updateItem = (id, name, quantity, position) => {
     });
 }
 
-export const logout = (email) => {
-    return axios.post(`${URL}api/logout`, {
-        email: email
+
+export const createEvent = (event) => {
+    return axios.post(`${URL}api/create-event`, {
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        color: null,
+        admin_id: null,
+        editable: true,
+        deletable: true
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
     }).then(res => {
-            localStorage.removeItem('sessionData');
+    });
+}
+
+export const getEvents = () => {
+    return axios.get(`${URL}api/events`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
-    );
+    }).then(res => {
+        return res.data;
+    });
+}
+
+export const getEventById = (id) => {
+    return axios.get(`${URL}api/events/${id}`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
+        return res.data;
+    });
+}
+
+export const updateEvent = (event) => {
+    console.log(event.event_id);
+    return axios.put(`${URL}api/events/${event.event_id}`, {
+        title: event.title,
+        start: event.start,
+        end: event.end,
+        color: null,
+        admin_id: null,
+        editable: null,
+        deletable: null
+    }, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
+        console.log(res);
+    });
+}
+
+export const deleteEvent = (event) => {
+    console.log(event);
+    return axios.delete(`${URL}api/events/${event}`, {
+        headers: {
+            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+        }
+    }).then(res => {
+    });
 }
