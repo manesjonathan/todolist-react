@@ -1,5 +1,6 @@
 import {useEffect, useState} from "react";
 import {Scheduler} from "@aldabil/react-scheduler";
+import fr from 'date-fns/locale/fr'
 import {createEvent, deleteEvent, getEvents, updateEvent} from "./../backend/backend.js";
 
 
@@ -12,7 +13,7 @@ const day = {
 
 const week = {
     weekDays: [0, 1, 2, 3, 4, 5, 6],
-    weekStartOn: 6,
+    weekStartOn: 1,
     startHour: 5,
     endHour: 23,
     step: 60,
@@ -88,10 +89,21 @@ const CalendarView = () => {
     const handleDelete = async (event) => {
         return new Promise((res, rej) => {
             deleteEvent(event);
-            setEvents(events.filter((e) => e.event_id !== event.event_id));
+            setEvents([...events.filter((e) => e.event_id !== event.event_id)]);
             res(event);
         });
     };
+
+
+    const handleUpdate = async (date, updatedEvent) => {
+        return new Promise((res, rej) => {
+            console.log(updatedEvent);
+            updateEvent(updatedEvent).then(() => {
+                setEvents([...events.filter((e) => e.event_id !== updatedEvent.event_id), updatedEvent]);
+            });
+            res(updatedEvent);
+        });
+    }
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -100,11 +112,14 @@ const CalendarView = () => {
             <main className={"mt-14 z-10 absolute top-0 left-0 right-0 bottom-0"}>
                 <Scheduler
                     day={day}
+                    hourFormat={"24"}
                     week={week}
                     translations={translations}
+                    locale={fr}
                     events={eventToDisplay}
                     onConfirm={handleConfirm}
                     onDelete={handleDelete}
+                    onEventDrop={handleUpdate}
                 />
             </main>
         );

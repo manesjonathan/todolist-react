@@ -1,5 +1,6 @@
 import axios from "axios";
 import {URL} from "./config.js";
+import moment from 'moment-timezone';
 
 export const loginFunction = (email, password, navigate) => {
     return axios.post(`${URL}login`, {
@@ -10,6 +11,7 @@ export const loginFunction = (email, password, navigate) => {
         navigate('/home');
     });
 }
+
 export const registerFunction = (email, password, navigate) => {
     console.log(email, password)
     return axios.post(`${URL}register`, {
@@ -137,10 +139,14 @@ export const updateItem = (id, name, quantity, position) => {
 
 
 export const createEvent = (event) => {
+    const dateStart = moment(new Date(event.start)).format();
+    const dateEnd = moment(new Date(event.end)).format();
+
+    console.log(event.start);
     return axios.post(`${URL}api/create-event`, {
         title: event.title,
-        start: event.start,
-        end: event.end,
+        start: dateStart,
+        end: dateEnd,
         color: null,
         admin_id: null,
         editable: true,
@@ -174,15 +180,16 @@ export const getEventById = (id) => {
 }
 
 export const updateEvent = (event) => {
-    console.log(event.event_id);
+    const dateStart = moment(new Date(event.start)).format();
+    const dateEnd = moment(new Date(event.end)).format();
     return axios.put(`${URL}api/events/${event.event_id}`, {
         title: event.title,
-        start: event.start,
-        end: event.end,
+        start: dateStart,
+        end: dateEnd,
         color: null,
         admin_id: null,
-        editable: null,
-        deletable: null
+        editable: true,
+        deletable: true
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
@@ -193,7 +200,6 @@ export const updateEvent = (event) => {
 }
 
 export const deleteEvent = (event) => {
-    console.log(event);
     return axios.delete(`${URL}api/events/${event}`, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))

@@ -1,13 +1,15 @@
-import TodoList from "./pages/TodoList.jsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import PrivateRoute from "./pages/PrivateRoute.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
-import CalendarView from "./pages/CalendarView.jsx";
-import CourseList from "./pages/ShoppingList.jsx";
-import PromiseList from "./pages/PromiseList.jsx";
+import {lazy} from "react";
+
+const Calendar = lazy(() => import('./pages/CalendarView.jsx'));
+const TodoList = lazy(() => import('./pages/TodoList.jsx'));
+const CourseList = lazy(() => import('./pages/ShoppingList.jsx'));
+const PromiseList = lazy(() => import('./pages/PromiseList.jsx'));
 
 const App = () => {
     return (
@@ -24,7 +26,7 @@ const App = () => {
                 <Route path="/calendar" element={
                     <PrivateRoute>
                         <Navbar/>
-                        <CalendarView/>
+                        <Calendar/>
                     </PrivateRoute>
                 }/>
                 <Route path="/courses" element={
