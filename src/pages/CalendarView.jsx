@@ -145,12 +145,13 @@ const CalendarView = () => {
     return (
         <main className={"mt-14 z-10 absolute top-0 left-0 right-0 bottom-0"}>
             <Scheduler
+                view={"month"}
                 day={day}
-                hourFormat={"24"}
                 week={week}
                 translations={translations}
-                locale={fr}
                 fields={fieldList}
+                locale={fr}
+                hourFormat={"24"}
                 getRemoteEvents={fetchEvents}
                 onConfirm={handleConfirm}
                 onDelete={handleDelete}
