@@ -142,7 +142,6 @@ export const createEvent = (event) => {
     const dateStart = moment(new Date(event.start)).format();
     const dateEnd = moment(new Date(event.end)).format();
 
-    console.log(event.start);
     return axios.post(`${URL}api/create-event`, {
         title: event.title,
         start: dateStart,
@@ -156,6 +155,7 @@ export const createEvent = (event) => {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
     }).then(res => {
+        return res.data;
     });
 }
 
@@ -195,7 +195,7 @@ export const updateEvent = (event) => {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
     }).then(res => {
-        console.log(res);
+        return res.data;
     });
 }
 

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {Scheduler} from "@aldabil/react-scheduler";
 import fr from 'date-fns/locale/fr'
 import {createEvent, deleteEvent, getEvents, updateEvent} from "./../backend/backend.js";
@@ -48,56 +48,65 @@ const translations = {
 
 const CalendarView = () => {
     const [events, setEvents] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        getEvents().then((data) => {
-            setEvents(data);
-            setIsLoading(false);
-        });
-    }, []);
-
-    let eventToDisplay = events.map((event) => {
-        return {
-            ...event,
-            event_id: event.event_id,
-            title: event.title,
-            start: new Date(event.start),
-            end: new Date(event.end),
-        };
-    });
-
-    const handleConfirm = async (event, action) => {
-        // Simulate http request: return the added/edited event
-        return new Promise((res, rej) => {
-            if (action === "edit") {
-                updateEvent(event).then(() => {
-                    setEvents([...events.filter((e) => e.event_id !== event.event_id), event]);
-                });
-
-            } else if (action === "create") {
-                createEvent(event).then(() => {
-                    setEvents([...events, event]);
-                });
-            }
-
-            res(event);
+    const fetchEvents = async (query) => {
+        return new Promise((res) => {
+            getEvents().then((data) => {
+                res(data.map((e) => {
+                    return {
+                        ...e,
+                        title: e.title,
+                        start: new Date(e.start),
+                        end: new Date(e.end),
+                    }
+                }));
+            });
 
         });
     };
 
-    const handleDelete = async (event) => {
+    const handleConfirm = async (event, action) => {
         return new Promise((res, rej) => {
-            deleteEvent(event);
-            setEvents([...events.filter((e) => e.event_id !== event.event_id)]);
-            res(event);
+            if (action === "edit") {
+                updateEvent(event).then((response) => {
+                    setEvents([...events.filter((e) => e.event_id !== event.event_id), response]);
+                    res({
+                        ...response,
+                        event_id: response.event_id,
+                        title: response.title,
+                        start: new Date(response.start),
+                        end: new Date(response.end),
+                    });
+                });
+
+            } else if (action === "create") {
+                createEvent(event).then((response) => {
+                    setEvents([...events, response]);
+                    res({
+                        ...response,
+                        event_id: response.event_id,
+                        title: response.title,
+                        start: new Date(response.start),
+                        end: new Date(response.end),
+                    });
+                });
+            }
+        });
+    };
+
+    const handleDelete = async (eventId) => {
+        return new Promise((res, rej) => {
+            deleteEvent(eventId).then(() => {
+                console.log(eventId + " deleted");
+                setEvents([...events.filter((e) => e.event_id !== eventId)]);
+            });
+            res(eventId);
         });
     };
 
 
     const handleUpdate = async (date, updatedEvent) => {
         return new Promise((res, rej) => {
-            console.log(updatedEvent);
             updateEvent(updatedEvent).then(() => {
                 setEvents([...events.filter((e) => e.event_id !== updatedEvent.event_id), updatedEvent]);
             });
@@ -105,25 +114,21 @@ const CalendarView = () => {
         });
     }
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    } else {
-        return (
-            <main className={"mt-14 z-10 absolute top-0 left-0 right-0 bottom-0"}>
-                <Scheduler
-                    day={day}
-                    hourFormat={"24"}
-                    week={week}
-                    translations={translations}
-                    locale={fr}
-                    events={eventToDisplay}
-                    onConfirm={handleConfirm}
-                    onDelete={handleDelete}
-                    onEventDrop={handleUpdate}
-                />
-            </main>
-        );
-    }
+    return (
+        <main className={"mt-14 z-10 absolute top-0 left-0 right-0 bottom-0"}>
+            <Scheduler
+                day={day}
+                hourFormat={"24"}
+                week={week}
+                translations={translations}
+                locale={fr}
+                getRemoteEvents={fetchEvents}
+                onConfirm={handleConfirm}
+                onDelete={handleDelete}
+                onEventDrop={handleUpdate}
+            />
+        </main>
+    );
 };
 
 export default CalendarView;
