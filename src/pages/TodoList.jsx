@@ -31,7 +31,7 @@ function TodoList() {
         const newStatus = result.destination.droppableId;
         const text = currentTask.text;
         const newPosition = result.destination.index;
-        updateTask(taskId, text, newStatus, newPosition, currentTask.end_date ?? null);
+        updateTask(taskId, text, newStatus, newPosition, currentTask.end_date ?? null, currentTask.assignee ?? null);
 
         setTasks(newTasks);
     }
@@ -42,17 +42,13 @@ function TodoList() {
         if (inputValue.trim() === '') {
             return;
         }
-        const newTodo = {
-            id: Math.random().toString(36).substr(2, 9),
-            text: inputValue.trim(),
-            status: 'todo',
-            position: tasks.length,
-            end_date: selectedDateTime ? selectedDateTime : null
-        };
-        createTask(inputValue.trim(), "todo", tasks.length, selectedDateTime !== '' ? selectedDateTime : null);
-        setTasks([...tasks, newTodo]);
-        setInputValue('');
-        setSelectedDateTime(null);
+
+        createTask(inputValue.trim(), "todo", tasks.length, selectedDateTime !== '' ? selectedDateTime : null, null).then((response) => {
+            setTasks([...tasks, response]);
+            setInputValue('');
+            setSelectedDateTime(null);
+        });
+
     };
 
     const getList = (status) => tasks.filter((task) => task.status === status);
@@ -112,7 +108,7 @@ function TodoList() {
                 </DragDropContext>
             </div>
             <form onSubmit={handleSubmit}>
-                <div className="flex justify-center py-8">
+                <div className="flex flex-col lg:flex-row justify-center py-8 w-1/2 m-auto">
                     <input
                         type="text"
                         value={inputValue}

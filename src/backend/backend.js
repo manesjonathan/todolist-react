@@ -36,7 +36,7 @@ export const logout = (email) => {
 }
 
 
-export const createTask = (text, status, position, timestamp) => {
+export const createTask = (text, status, position, timestamp, assignee) => {
     const headers = {
         'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData')),
     };
@@ -45,12 +45,14 @@ export const createTask = (text, status, position, timestamp) => {
         text: text,
         status: status,
         position: position,
-        end_date: timestamp
+        end_date: timestamp,
+        assignee: assignee
     };
 
     return axios.post(`${URL}api/create-task`, data, {headers: headers})
         .then(res => {
             // handle response
+            return res.data;
         })
         .catch(error => {
             // handle error
@@ -77,17 +79,19 @@ export const deleteTask = (id) => {
     });
 }
 
-export const updateTask = (id, text, status, position, endDate) => {
+export const updateTask = (id, text, status, position, endDate, assignee) => {
     return axios.put(`${URL}api/tasks/${id}`, {
         text: text,
         status: status,
         position: position,
-        end_date: endDate
+        end_date: endDate,
+        assignee: assignee
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
         }
     }).then(res => {
+        return res.data;
     });
 }
 
@@ -105,7 +109,8 @@ export const createItem = (name, quantity, position) => {
     return axios.post(`${URL}api/create-item`, {
         name: name,
         quantity: quantity,
-        position: position
+        position: position,
+        assignee: null
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))

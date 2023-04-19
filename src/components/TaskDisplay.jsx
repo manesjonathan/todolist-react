@@ -25,10 +25,8 @@ const getDraggable = (tasks, task, setTasks) => {
     };
 
     const handleEditText = (text) => {
-        updateTask(task.id, text.value, task.status, task.position, task.end_date ?? null);
-
+        updateTask(task.id, text.value, task.status, task.position, task.end_date ?? null, task.assignee ?? null);
     }
-
     const handleEditDate = (date) => {
         const parts = date.value.split(" ");
         const dateParts = parts[0].split("/");
@@ -40,7 +38,35 @@ const getDraggable = (tasks, task, setTasks) => {
         const minute = parseInt(timeParts[1], 10);
 
         const dateToSave = new Date(year, month, day, hour, minute);
-        updateTask(task.id, task.text, task.status, task.position, dateToSave.toISOString());
+        updateTask(task.id, task.text, task.status, task.position, dateToSave.toISOString(), task.assignee ?? null);
+        setTasks(tasks.map((t) => {
+            if (t.id === task.id) {
+                return {
+                    ...t,
+                    end_date: dateToSave.toISOString(),
+                }
+            }
+            return t;
+        }));
+    }
+
+
+    const handleAssignee = (e) => {
+        const newTask = {
+            ...task,
+            assignee: e.target.value
+        };
+        updateTask(newTask.id, newTask.text, newTask.status, newTask.position, newTask.end_date ?? null, newTask.assignee).then((response) => {
+            setTasks(tasks.map((t) => {
+                if (t.id === task.id) {
+                    return {
+                        ...t,
+                        assignee: response.assignee,
+                    }
+                }
+                return t;
+            }));
+        });
     }
 
     return <Draggable
@@ -54,11 +80,26 @@ const getDraggable = (tasks, task, setTasks) => {
                     {...provided.dragHandleProps}
                     ref={provided.innerRef}
                     className="bg-white p-2 rounded-lg shadow-md mb-2">
-                    <EditText
-                        name="textbox"
-                        defaultValue={task.text}
-                        onSave={handleEditText}
-                    />
+                    <div className="flex items-center">
+                        <input type="radio" name={task.id} value={1}
+                               className="rounded-full h-4 w-4 mr-2 bg-green-500"
+                               style={{accentColor: "rgb(249 168 212)"}}
+                               onChange={handleAssignee}
+                               checked={task.assignee === 1 && task.assignee !== null}
+                        />
+                        <input type="radio" name={task.id} value={2}
+                               className="rounded-full h-4 w-4 mr-2 bg-red-500"
+                               style={{accentColor: "rgb(49 46 129)"}}
+                               checked={task.assignee === 2 && task.assignee !== null}
+                               onChange={handleAssignee}/>
+                        <EditText
+                            name="textbox"
+                            defaultValue={task.text}
+                            onSave={handleEditText}
+                        />
+                    </div>
+
+
                     <div className="text-gray-500 text-xs">
                         <EditText
                             name="textbox"
