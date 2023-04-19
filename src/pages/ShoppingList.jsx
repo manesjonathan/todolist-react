@@ -71,7 +71,6 @@ function ShoppingList() {
         );
         newItems[itemIndex].quantity = quantity;
         setItems(newItems);
-        console.log(quantity);
         updateItem(newItems[itemIndex].id, newItems[itemIndex].name, quantity, newItems[itemIndex].position);
     }
 

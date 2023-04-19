@@ -13,7 +13,6 @@ export const loginFunction = (email, password, navigate) => {
 }
 
 export const registerFunction = (email, password, navigate) => {
-    console.log(email, password)
     return axios.post(`${URL}register`, {
         email: email,
         password: password
@@ -149,7 +148,8 @@ export const createEvent = (event) => {
         color: null,
         admin_id: null,
         editable: true,
-        deletable: true
+        deletable: true,
+        user_id: event.user_id ?? 3
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
@@ -186,10 +186,10 @@ export const updateEvent = (event) => {
         title: event.title,
         start: dateStart,
         end: dateEnd,
-        color: null,
         admin_id: null,
         editable: true,
-        deletable: true
+        deletable: true,
+        user_id: event.user_id ?? 3
     }, {
         headers: {
             'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))

@@ -45,11 +45,25 @@ const translations = {
     loading: 'Chargement...',
 };
 
+const fieldList = [
+    {
+        name: "user_id",
+        type: "select",
+        config: {
+            label: "Assigné à",
+            options: [{text: 'Aylin', value: 1}, {text: 'Jonathan', value: 2}, {text: 'Nous deux', value: 3}],
+            variant: "outlined",
+        },
+        default: 3,
+
+    },
+];
+
 
 const CalendarView = () => {
     const [events, setEvents] = useState([]);
 
-    const fetchEvents = async (query) => {
+    const fetchEvents = async () => {
         return new Promise((res) => {
             getEvents().then((data) => {
                 res(data.map((e) => {
@@ -76,6 +90,9 @@ const CalendarView = () => {
                         title: response.title,
                         start: new Date(response.start),
                         end: new Date(response.end),
+                        color: response.color,
+                        user_id: response.user_id,
+
                     });
                 });
 
@@ -88,6 +105,9 @@ const CalendarView = () => {
                         title: response.title,
                         start: new Date(response.start),
                         end: new Date(response.end),
+                        color: response.color,
+                        user_id: response.user_id,
+
                     });
                 });
             }
@@ -97,7 +117,6 @@ const CalendarView = () => {
     const handleDelete = async (eventId) => {
         return new Promise((res, rej) => {
             deleteEvent(eventId).then(() => {
-                console.log(eventId + " deleted");
                 setEvents([...events.filter((e) => e.event_id !== eventId)]);
             });
             res(eventId);
@@ -107,10 +126,19 @@ const CalendarView = () => {
 
     const handleUpdate = async (date, updatedEvent) => {
         return new Promise((res, rej) => {
-            updateEvent(updatedEvent).then(() => {
-                setEvents([...events.filter((e) => e.event_id !== updatedEvent.event_id), updatedEvent]);
+            updateEvent(updatedEvent).then((response) => {
+                setEvents([...events.filter((e) => e.event_id !== response.event_id), response]);
+                res({
+                    ...response,
+                    event_id: response.event_id,
+                    title: response.title,
+                    start: new Date(response.start),
+                    end: new Date(response.end),
+                    color: response.color,
+                    user_id: response.user_id,
+
+                });
             });
-            res(updatedEvent);
         });
     }
 
@@ -122,6 +150,7 @@ const CalendarView = () => {
                 week={week}
                 translations={translations}
                 locale={fr}
+                fields={fieldList}
                 getRemoteEvents={fetchEvents}
                 onConfirm={handleConfirm}
                 onDelete={handleDelete}
