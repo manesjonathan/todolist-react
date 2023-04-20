@@ -55,7 +55,6 @@ const fieldList = [
             variant: "outlined",
         },
         default: 3,
-
     },
 ];
 
