@@ -56,54 +56,60 @@ function TodoList() {
 
     return (
 
-        <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
+        <main className="bg-main-bg bg-no-repeat bg-cover bg-fixed min-h-screen">
             <div className="flex justify-center">
                 <DragDropContext onDragEnd={handleDragEnd}>
                     <div className="mt-28 flex flex-col lg:grid lg:grid-cols-3 gap-16 space-y-4 lg:space-y-0">
-                        <div className="w-full">
-                            <Droppable droppableId="todo">
-                                {(provided) => (
-                                    <div
-                                        className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                    >
-                                        <h2 className="text-lg font-bold mb-4">A Faire</h2>
-                                        {getList("todo").map((task) => getDraggable(tasks, task, setTasks))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
+                        <div className="w-full ">
+                            <div className="bg-gray-100 p-4 rounded-lg w-80">
+                                <h2 className="text-lg font-bold mb-4">A Faire</h2>
+                                <Droppable droppableId="todo">
+                                    {(provided) => (
+                                        <div {...provided.droppableProps} ref={provided.innerRef}
+                                             style={{minHeight: '50px'}}
+                                             className={'overflow-y-auto h-fit max-h-screen'}>
+                                            {getList("todo").map((task) =>
+                                                getDraggable(tasks, task, setTasks)
+                                            )}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </div>
                         </div>
-                        <div className="w-full">
-                            <Droppable droppableId="doing">
-                                {(provided) => (
-                                    <div
-                                        className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                    >
-                                        <h2 className="text-lg font-bold mb-4">En Cours</h2>
-                                        {getList("doing").map((task) => getDraggable(tasks, task, setTasks))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
+                        <div className="w-full ">
+                            <div className="bg-gray-100 p-4 rounded-lg w-80">
+                                <h2 className="text-lg font-bold mb-4">En Cours</h2>
+                                <Droppable droppableId="doing">
+                                    {(provided) => (
+                                        <div {...provided.droppableProps} ref={provided.innerRef}
+                                             style={{minHeight: '50px'}}
+                                             className={'overflow-y-auto h-fit max-h-screen'}>
+                                            {getList("doing").map((task) =>
+                                                getDraggable(tasks, task, setTasks)
+                                            )}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </div>
                         </div>
-                        <div className="w-full">
-                            <Droppable droppableId="done">
-                                {(provided) => (
-                                    <div
-                                        className="bg-gray-100 p-4 rounded-lg max-h-screen overflow-y-auto h-fit w-80"
-                                        {...provided.droppableProps}
-                                        ref={provided.innerRef}
-                                    >
-                                        <h2 className="text-lg font-bold mb-4">Fini</h2>
-                                        {getList("done").map((task) => getDraggable(tasks, task, setTasks))}
-                                        {provided.placeholder}
-                                    </div>
-                                )}
-                            </Droppable>
+                        <div className="w-full ">
+                            <div className="bg-gray-100 p-4 rounded-lg w-80">
+                                <h2 className="text-lg font-bold mb-4">Fini</h2>
+                                <Droppable droppableId="done">
+                                    {(provided) => (
+                                        <div {...provided.droppableProps} ref={provided.innerRef}
+                                             style={{minHeight: '50px'}}
+                                             className={'overflow-y-auto h-fit max-h-screen'}>
+                                            {getList("done").map((task) =>
+                                                getDraggable(tasks, task, setTasks)
+                                            )}
+                                            {provided.placeholder}
+                                        </div>
+                                    )}
+                                </Droppable>
+                            </div>
                         </div>
                     </div>
                 </DragDropContext>
@@ -123,7 +129,8 @@ function TodoList() {
                         defaultValue={selectedDateTime}
                         className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"
                     />
-                    <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-4 lg:p-2 rounded-r-md mt-2 lg:mx-2 w-full uppercase">
+                    <button type="submit"
+                            className="bg-blue-500 hover:bg-blue-600 text-white p-4 lg:p-2 rounded-r-md mt-2 lg:mx-2 w-full uppercase">
                         Ajouter
                     </button>
                 </div>

@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
-import {FaTrash} from "react-icons/fa";
-import Swal from "sweetalert2";
-import {createItem, deleteItem, getItems, updateItem} from "../backend/backend.js";
+import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 
 function PromiseList() {
     const [items, setItems] = useState([]);
@@ -36,7 +33,7 @@ function PromiseList() {
 
     return (
         <>
-            <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
+            <main className="bg-main-bg bg-no-repeat bg-cover bg-fixed min-h-screen">
                 <div className="flex justify-center">
                     <DragDropContext onDragEnd={handleDragEnd}>
                         <div className="mt-28 flex flex-col text-center">
