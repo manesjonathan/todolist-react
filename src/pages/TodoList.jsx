@@ -2,11 +2,12 @@ import React, {useEffect, useState} from 'react';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import {createTask, getTasks, updateTask} from "./../backend/backend.js";
 import getDraggable from "../components/TaskDisplay.jsx";
+import moment from "moment-timezone";
 
 function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const [selectedDateTime, setSelectedDateTime] = useState('');
+    const [selectedDateTime, setSelectedDateTime] = useState(moment(new Date()).format('YYYY-MM-DDTHH:mm'));
 
     useEffect(() => {
         getTasks().then((response) => {
@@ -58,7 +59,7 @@ function TodoList() {
         <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
             <div className="flex justify-center">
                 <DragDropContext onDragEnd={handleDragEnd}>
-                    <div className="mt-28 flex flex-col lg:grid lg:grid-cols-3 gap-8 space-y-4 lg:space-y-0">
+                    <div className="mt-28 flex flex-col lg:grid lg:grid-cols-3 gap-16 space-y-4 lg:space-y-0">
                         <div className="w-full">
                             <Droppable droppableId="todo">
                                 {(provided) => (
@@ -108,19 +109,21 @@ function TodoList() {
                 </DragDropContext>
             </div>
             <form onSubmit={handleSubmit}>
-                <div className="flex flex-col lg:flex-row justify-center py-8 w-1/2 m-auto">
+                <div className="flex flex-col lg:flex-row items-center lg:items-stretch py-8 m-auto w-80 lg:w-1/2">
                     <input
                         type="text"
                         value={inputValue}
+                        placeholder="Ajouter une tâche"
                         onChange={(e) => setInputValue(e.target.value)}
-                        className="p-2 border-2 border-gray-500 rounded-l-md"
+                        className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"
                     />
                     <input
                         type="datetime-local"
                         onChange={(e) => setSelectedDateTime(e.target.value)}
-                        className="p-2 border-2 border-gray-500"
+                        defaultValue={selectedDateTime}
+                        className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"
                     />
-                    <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r-md">
+                    <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white p-4 lg:p-2 rounded-r-md mt-2 lg:mx-2 w-full uppercase">
                         Ajouter
                     </button>
                 </div>
