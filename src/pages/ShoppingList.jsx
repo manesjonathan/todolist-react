@@ -76,7 +76,7 @@ function ShoppingList() {
 
     return (
         <>
-            <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
+            <main className="bg-main-bg bg-no-repeat bg-cover min-h-[calc(100vh-55px)]">
                 <div className="flex justify-center">
                     <DragDropContext onDragEnd={handleDragEnd}>
                         <div className="mt-14 flex flex-col text-center">

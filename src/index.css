@@ -18,4 +18,13 @@
         background-color: rgb(249, 115, 22);
 
     }
+
+    div::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: rgba(49, 46, 129, 0.24);
+    }
+
+    div::-webkit-scrollbar-thumb {
+        background-color: rgba(249, 115, 22, 0.73);
+    }
 }
