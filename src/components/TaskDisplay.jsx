@@ -110,7 +110,7 @@ const getDraggable = (tasks, task, setTasks) => {
 
                     <div className={'flex justify-end'}>
                         <button
-                            className="bg-gray-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg mt-2"
+                            className="bg-gray-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg text-sm"
                             onClick={() => handleDelete(task.id)}>
                             <FaTrash/>
                         </button>
