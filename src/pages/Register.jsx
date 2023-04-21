@@ -23,13 +23,19 @@ function Register() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+
+        if (password !== confirmPassword) {
+            setError("Les mots de passe ne correspondent pas");
+            return;
+        }
+
         try {
             registerFunction(email, password, navigate).catch(() => {
-                setError("Utilisateur déjà présent");
+                setError("L'utilisateur n'est pas autorisé ou existe déjà");
             })
         } catch (e) {
             console.error(e);
-            setError("An error occurred");
+            setError("Une erreur est survenue");
         }
     };
 
@@ -91,23 +97,20 @@ function Register() {
                             />
                         </div>
                     </div>
-
-                    <div className="flex items-center justify-end">
-
-
-                        <div className="text-sm">
+                    <div className="flex items-center justify-end text-end">
+                        <div className="text-sm flex flex-col">
                             <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                Déja un compte?
+                                Déjà un compte?
                             </a>
+                            {error && <p className="text-red-500 animate-pulse">{error}</p>}
+
                         </div>
                     </div>
-
-
                     <div>
                         <button
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Sign in
+                            Créer un compte
                         </button>
                     </div>
                 </form>
