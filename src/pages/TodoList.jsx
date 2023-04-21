@@ -107,7 +107,7 @@ function TodoList() {
                                         {(provided) => (
                                             <div {...provided.droppableProps} ref={provided.innerRef}
                                                  style={{minHeight: '50px'}}
-                                                 className={'overflow-y-auto max-h-screen'}>
+                                                 className={'overflow-y-auto max-h-[calc(100vh-20rem)]'}>
                                                 {getList("todo").map((task) =>
                                                     getDraggable(tasks, task, setTasks)
                                                 )}
