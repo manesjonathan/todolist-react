@@ -20,11 +20,15 @@
     }
 
     div::-webkit-scrollbar {
-        width: 0.5rem;
+        width: 0.7rem;
+        border-left: 0.3rem rgb(243 244 246) solid;
+
         background-color: rgba(49, 46, 129, 0.24);
     }
 
     div::-webkit-scrollbar-thumb {
+        border-left: 0.3rem rgb(243 244 246) solid;
+
         background-color: rgba(249, 115, 22, 0.73);
     }
 }
