@@ -76,10 +76,10 @@ function ShoppingList() {
 
     return (
         <>
-            <main className="bg-main-bg bg-no-repeat bg-cover bg-fixed min-h-screen">
+            <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen">
                 <div className="flex justify-center">
                     <DragDropContext onDragEnd={handleDragEnd}>
-                        <div className="mt-28 flex flex-col text-center">
+                        <div className="mt-14 flex flex-col text-center">
                             <h2 className="text-2xl font-bold mb-4 text-gray-50 uppercase">Liste de courses</h2>
                             <Droppable droppableId="items">
                                 {(provided) => (

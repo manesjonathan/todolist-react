@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+    html {
+        height: 100vh;
+        padding-top: 55px;
+    }
+
+    body::-webkit-scrollbar {
+        width: 0.5rem;
+        background-color: rgb(49 46 129);
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: rgb(249, 115, 22);
+
+    }
+}
