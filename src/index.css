@@ -6,7 +6,6 @@
 @layer base {
     html {
         height: 100vh;
-        padding-top: 55px;
     }
 
     body::-webkit-scrollbar {

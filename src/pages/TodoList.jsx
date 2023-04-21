@@ -87,8 +87,8 @@ function TodoList() {
 
     return (
 
-        <main className="bg-main-bg bg-no-repeat bg-cover min-h-[calc(100vh-55px)] overflow-x-auto">
-            <div className={'mt-14'}>
+        <main className="bg-main-bg bg-no-repeat bg-cover min-h-screen overflow-x-auto">
+            <div className={'mt-28'}>
                 <div className="flex justify-center">
                     <DragDropContext onDragEnd={handleDragEnd}>
                         <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 space-y-4 lg:space-y-0">
