@@ -3,11 +3,12 @@ import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import {createTask, getTasks, updateTask} from "./../backend/backend.js";
 import getDraggable from "../components/TaskDisplay.jsx";
 import moment from "moment-timezone";
+import {BsCalendar2Date, BsFillPeopleFill} from "react-icons/bs";
 
 function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [inputValue, setInputValue] = useState('');
-    const [selectedDateTime, setSelectedDateTime] = useState(moment(new Date()).format('YYYY-MM-DDTHH:mm'));
+    const [selectedDateTime, setSelectedDateTime] = useState(moment(new Date().setDate(new Date().getDate() + 1)).format('YYYY-MM-DDTHH:mm'));
 
     useEffect(() => {
         getTasks().then((response) => {
@@ -44,13 +45,43 @@ function TodoList() {
             return;
         }
 
-        createTask(inputValue.trim(), "todo", tasks.length, selectedDateTime !== '' ? selectedDateTime : null, null).then((response) => {
+        createTask(inputValue.trim(), "todo", tasks.length, selectedDateTime ? selectedDateTime : new Date().setDate(new Date().getDate() + 1), null).then((response) => {
             setTasks([...tasks, response]);
             setInputValue('');
             setSelectedDateTime(null);
         });
 
     };
+
+    const handleSortByPeople = () => {
+        const newTasks = [...tasks];
+        newTasks.sort((a, b) => {
+            if (a.assignee === null) {
+                return 1;
+            }
+            if (b.assignee === null) {
+                return -1;
+            }
+            return a.assignee - b.assignee;
+        });
+        setTasks(newTasks);
+    }
+
+
+    const handleSortByDate = () => {
+        const newTasks = [...tasks];
+        newTasks.sort((a, b) => {
+            if (a.end_date === null) {
+                return -1;
+            }
+            if (b.end_date === null) {
+                return 1;
+            }
+            return a.end_date.localeCompare(b.end_date);
+        });
+        setTasks(newTasks);
+    }
+
 
     const getList = (status) => tasks.filter((task) => task.status === status);
 
@@ -63,7 +94,15 @@ function TodoList() {
                         <div className="flex flex-col lg:grid lg:grid-cols-3 lg:gap-8 space-y-4 lg:space-y-0">
                             <div className="w-full ">
                                 <div className="bg-gray-100 p-4 rounded-lg w-80">
-                                    <h2 className="text-lg font-bold mb-4">A Faire</h2>
+
+                                    <div className={'flex justify-between mb-4 items-center'}>
+                                        <h2 className="text-lg font-bold ">A Faire</h2>
+                                        <div className={'flex text-lg'}>
+                                            <BsFillPeopleFill onClick={handleSortByPeople}/>
+                                            <BsCalendar2Date className={'ml-2.5'} onClick={handleSortByDate}/>
+                                        </div>
+                                    </div>
+
                                     <Droppable droppableId="todo">
                                         {(provided) => (
                                             <div {...provided.droppableProps} ref={provided.innerRef}
