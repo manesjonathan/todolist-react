@@ -161,14 +161,12 @@ function TodoList() {
                             value={inputValue}
                             placeholder="Ajouter une tâche"
                             onChange={(e) => setInputValue(e.target.value)}
-                            className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"
-                        />
+                            className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"/>
                         <input
                             type="datetime-local"
                             onChange={(e) => setSelectedDateTime(e.target.value)}
                             defaultValue={selectedDateTime}
-                            className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"
-                        />
+                            className="p-4 lg:p-2 border-2 border-gray-500 mt-2 lg:mx-2 w-full"/>
                         <button type="submit"
                                 className="bg-blue-500 hover:bg-blue-600 text-white p-4 lg:p-2 rounded-r-md mt-2 lg:mx-2 w-full uppercase">
                             Ajouter

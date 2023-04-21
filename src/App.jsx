@@ -4,7 +4,8 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
-import {lazy} from "react";
+import React, {lazy} from "react";
+import WeatherApp from "./backend/WeatherApp.jsx";
 
 const Calendar = lazy(() => import('./pages/CalendarView.jsx'));
 const TodoList = lazy(() => import('./pages/TodoList.jsx'));
@@ -20,6 +21,7 @@ const App = () => {
                 <Route path="/home" element={
                     <PrivateRoute>
                         <Navbar/>
+                        <WeatherApp/>
                         <TodoList/>
                     </PrivateRoute>
                 }/>
