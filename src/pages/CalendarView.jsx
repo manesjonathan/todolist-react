@@ -3,7 +3,6 @@ import {Scheduler} from "@aldabil/react-scheduler";
 import fr from 'date-fns/locale/fr'
 import {createEvent, deleteEvent, getEvents, updateEvent} from "./../backend/backend.js";
 
-
 const day = {
     startHour: 5,
     endHour: 23,
@@ -20,6 +19,8 @@ const week = {
     navigation: true,
     disableGoToDay: false,
 };
+
+
 const month = {
     weekDays: [0, 1, 2, 3, 4, 5, 6],
     weekStartOn: 1,
@@ -50,6 +51,7 @@ const translations = {
     loading: 'Chargement...',
 };
 
+
 const fieldList = [
     {
         name: "user_id",
@@ -66,7 +68,6 @@ const fieldList = [
 
 const CalendarView = () => {
     const [events, setEvents] = useState([]);
-
     const fetchEvents = async () => {
         return new Promise((res) => {
             getEvents().then((data) => {
