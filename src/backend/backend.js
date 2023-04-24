@@ -23,17 +23,9 @@ export const registerFunction = (email, password, navigate) => {
     });
 }
 
-export const logout = (email) => {
-    return axios.post(`${URL}api/logout`, {
-        email: email
-    }, {
-        headers: {
-            'Authorization': 'Bearer ' + Cookies.get('jwt')
-        }
-    }).then(res => {
-            Cookies.remove('jwt');
-        }
-    );
+export const logout = (navigate) => {
+    Cookies.remove('jwt');
+    navigate('/login');
 }
 
 
