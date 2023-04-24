@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {FaBars} from "react-icons/fa";
 import {GiCrossedBones} from "react-icons/gi";
-import WeatherApp from "../backend/WeatherApp.jsx";
 
 const Navbar = () => {
     const [navbarOpen, setNavbarOpen] = useState(false);
@@ -13,7 +12,7 @@ const Navbar = () => {
                     <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
                         <div className={'flex items-center'}>
                             <a className="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-nowrap uppercase hover:text-orange-500"
-                               href="/home">Todo Web App
+                               href="/">Todo Web App
                             </a>
                         </div>
                         <button
@@ -36,7 +35,7 @@ const Navbar = () => {
                         <ul className={"flex flex-col lg:flex-row list-none lg:ml-auto justify-center" + (navbarOpen ? " w-full" : "")}>
                             <li>
                                 <a className={'px-3 py-2 flex text-xs uppercase font-bold leading-snug hover:text-orange-500 cursor-pointer w-full'}
-                                   href={'/home'}>Tâches
+                                   href={'/'}>Tâches
                                 </a>
                             </li>
                             <li>

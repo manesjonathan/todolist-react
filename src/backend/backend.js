@@ -1,14 +1,15 @@
 import axios from "axios";
 import {URL} from "./config.js";
 import moment from 'moment-timezone';
+import Cookies from 'js-cookie';
 
 export const loginFunction = (email, password, navigate) => {
     return axios.post(`${URL}login`, {
         email: email,
         password: password
     }).then(res => {
-        localStorage.setItem('sessionData', JSON.stringify(res.data));
-        navigate('/home');
+        Cookies.set('jwt', res.data, {expires: 30});
+        navigate('/');
     });
 }
 
@@ -17,8 +18,8 @@ export const registerFunction = (email, password, navigate) => {
         email: email,
         password: password
     }).then(res => {
-        localStorage.setItem('sessionData', JSON.stringify(res.data));
-        navigate('/home');
+        Cookies.set('jwt', res.data, {expires: 30});
+        navigate('/');
     });
 }
 
@@ -27,10 +28,10 @@ export const logout = (email) => {
         email: email
     }, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
-            localStorage.removeItem('sessionData');
+            Cookies.remove('jwt');
         }
     );
 }
@@ -38,7 +39,7 @@ export const logout = (email) => {
 
 export const createTask = (text, status, position, timestamp, assignee) => {
     const headers = {
-        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData')),
+        'Authorization': 'Bearer ' + Cookies.get('jwt'),
     };
 
     const data = {
@@ -63,7 +64,7 @@ export const createTask = (text, status, position, timestamp, assignee) => {
 export const getTasks = () => {
     return axios.get(`${URL}api/tasks`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -73,7 +74,7 @@ export const getTasks = () => {
 export const deleteTask = (id) => {
     return axios.delete(`${URL}api/tasks/${id}`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
     });
@@ -88,7 +89,7 @@ export const updateTask = (id, text, status, position, endDate, assignee) => {
         assignee: assignee
     }, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -98,7 +99,7 @@ export const updateTask = (id, text, status, position, endDate, assignee) => {
 export const getItems = () => {
     return axios.get(`${URL}api/items`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -113,7 +114,7 @@ export const createItem = (name, quantity, position) => {
         assignee: null
     }, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
     });
@@ -122,7 +123,7 @@ export const createItem = (name, quantity, position) => {
 export const deleteItem = (id) => {
     return axios.delete(`${URL}api/items/${id}`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
     });
@@ -135,7 +136,7 @@ export const updateItem = (id, name, quantity, position) => {
         position: position
     }, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
     });
@@ -157,7 +158,7 @@ export const createEvent = (event) => {
         user_id: event.user_id ?? 3
     }, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -167,7 +168,7 @@ export const createEvent = (event) => {
 export const getEvents = () => {
     return axios.get(`${URL}api/events`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -177,7 +178,7 @@ export const getEvents = () => {
 export const getEventById = (id) => {
     return axios.get(`${URL}api/events/${id}`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -197,7 +198,7 @@ export const updateEvent = (event) => {
         user_id: event.user_id ?? 3
     }, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
         return res.data;
@@ -207,7 +208,7 @@ export const updateEvent = (event) => {
 export const deleteEvent = (event) => {
     return axios.delete(`${URL}api/events/${event}`, {
         headers: {
-            'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('sessionData'))
+            'Authorization': 'Bearer ' + Cookies.get('jwt')
         }
     }).then(res => {
     });

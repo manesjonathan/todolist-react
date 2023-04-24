@@ -7,7 +7,6 @@ const Logout = () => {
 
     useEffect(() => {
         logout();
-        sessionStorage.removeItem('user');
         navigate('/');
     }, [])
 }

@@ -14,12 +14,17 @@ const day = {
 const week = {
     weekDays: [0, 1, 2, 3, 4, 5, 6],
     weekStartOn: 1,
-    startHour: 5,
+    startHour: 7,
     endHour: 23,
     step: 60,
     navigation: true,
     disableGoToDay: false,
 };
+const month = {
+    weekDays: [0, 1, 2, 3, 4, 5, 6],
+    weekStartOn: 1,
+};
+
 
 const translations = {
     navigation: {
@@ -142,11 +147,12 @@ const CalendarView = () => {
     }
 
     return (
-        <main className={"mt-14 z-10 absolute top-0 left-0 right-0 bottom-0"}>
+        <main className={"mt-14 z-10 absolute w-full h-[calc(100%-3.5rem)]"}>
             <Scheduler
                 view={"month"}
                 day={day}
                 week={week}
+                month={month}
                 translations={translations}
                 fields={fieldList}
                 locale={fr}
@@ -154,8 +160,7 @@ const CalendarView = () => {
                 getRemoteEvents={fetchEvents}
                 onConfirm={handleConfirm}
                 onDelete={handleDelete}
-                onEventDrop={handleUpdate}
-            />
+                onEventDrop={handleUpdate}/>
         </main>
     );
 };

@@ -1,13 +1,14 @@
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
+import Cookies from 'js-cookie';
 
 const PrivateRoute = (element) => {
     const navigate = useNavigate();
-    const isAuthenticated = !!localStorage.getItem("sessionData");
+    const isAuthenticated = !!Cookies.get("jwt");
 
     useEffect(() => {
         if (!isAuthenticated) {
-            navigate("/");
+            navigate("/login");
         }
     }, [isAuthenticated, navigate]);
 

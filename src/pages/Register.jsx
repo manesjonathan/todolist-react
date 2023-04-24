@@ -99,7 +99,7 @@ function Register() {
                     </div>
                     <div className="flex items-center justify-end text-end">
                         <div className="text-sm flex flex-col">
-                            <a href="/" className="font-medium text-indigo-600 hover:text-indigo-500">
+                            <a href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Déjà un compte?
                             </a>
                             {error && <p className="text-red-500 animate-pulse">{error}</p>}
