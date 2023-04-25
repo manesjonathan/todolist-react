@@ -98,8 +98,8 @@ function TodoList() {
                                     <div className={'flex justify-between mb-4 items-center'}>
                                         <h2 className="text-lg font-bold ">A Faire</h2>
                                         <div className={'flex text-lg'}>
-                                            <BsFillPeopleFill onClick={handleSortByPeople}/>
-                                            <BsCalendar2Date className={'ml-2.5'} onClick={handleSortByDate}/>
+                                            <BsFillPeopleFill className={'cursor-pointer'} onClick={handleSortByPeople}/>
+                                            <BsCalendar2Date className={'ml-2.5 cursor-pointer'} onClick={handleSortByDate}/>
                                         </div>
                                     </div>
 
