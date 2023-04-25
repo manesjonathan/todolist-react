@@ -5,12 +5,12 @@ import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
 import React, {lazy} from "react";
-import WeatherApp from "./backend/WeatherApp.jsx";
 
 const Calendar = lazy(() => import('./pages/CalendarView.jsx'));
 const TodoList = lazy(() => import('./pages/TodoList.jsx'));
 const CourseList = lazy(() => import('./pages/ShoppingList.jsx'));
 const PromiseList = lazy(() => import('./pages/PromiseList.jsx'));
+const WeatherApp = lazy(() => import('./components/WeatherApp.jsx'));
 
 const App = () => {
     return (
