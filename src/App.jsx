@@ -1,7 +1,6 @@
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import PrivateRoute from "./pages/PrivateRoute.jsx";
 import Login from "./pages/Login.jsx";
-import Register from "./pages/Register.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Logout from "./components/Logout.jsx";
 import React, {lazy} from "react";
@@ -11,6 +10,7 @@ const TodoList = lazy(() => import('./pages/TodoList.jsx'));
 const CourseList = lazy(() => import('./pages/ShoppingList.jsx'));
 const PromiseList = lazy(() => import('./pages/PromiseList.jsx'));
 const WeatherApp = lazy(() => import('./components/WeatherApp.jsx'));
+const Register = lazy(() => import('./pages/Register.jsx'));
 
 const App = () => {
     return (

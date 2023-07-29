@@ -297,18 +297,18 @@ define(['exports'], (function (exports) { 'use strict';
         url,
         method
       }) => {
-        return `Unable to cache '${url}' because it is a '${method}' request and ` + `only 'GET' requests can be cached.`;
+        return `Unable to cache '${process.env.URL}' because it is a '${method}' request and ` + `only 'GET' requests can be cached.`;
       },
       'cache-put-with-no-response': ({
         url
       }) => {
-        return `There was an attempt to cache '${url}' but the response was not ` + `defined.`;
+        return `There was an attempt to cache '${process.env.URL}' but the response was not ` + `defined.`;
       },
       'no-response': ({
         url,
         error
       }) => {
-        let message = `The strategy could not generate a response for '${url}'.`;
+        let message = `The strategy could not generate a response for '${process.env.URL}'.`;
         if (error) {
           message += ` The underlying error is ${error}.`;
         }
@@ -318,23 +318,23 @@ define(['exports'], (function (exports) { 'use strict';
         url,
         status
       }) => {
-        return `The precaching request for '${url}' failed` + (status ? ` with an HTTP status of ${status}.` : `.`);
+        return `The precaching request for '${process.env.URL}' failed` + (status ? ` with an HTTP status of ${status}.` : `.`);
       },
       'non-precached-url': ({
         url
       }) => {
-        return `createHandlerBoundToURL('${url}') was called, but that URL is ` + `not precached. Please pass in a URL that is precached instead.`;
+        return `createHandlerBoundToURL('${process.env.URL}') was called, but that URL is ` + `not precached. Please pass in a URL that is precached instead.`;
       },
       'add-to-cache-list-conflicting-integrities': ({
         url
       }) => {
-        return `Two of the entries passed to ` + `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` + `${url} with different integrity values. Please remove one of them.`;
+        return `Two of the entries passed to ` + `'workbox-precaching.PrecacheController.addToCacheList()' had the URL ` + `${process.env.URL} with different integrity values. Please remove one of them.`;
       },
       'missing-precache-entry': ({
         cacheName,
         url
       }) => {
-        return `Unable to find a precached response in ${cacheName} for ${url}.`;
+        return `Unable to find a precached response in ${cacheName} for ${process.env.URL}.`;
       },
       'cross-origin-copy-response': ({
         origin
