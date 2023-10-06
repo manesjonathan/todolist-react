@@ -26,8 +26,7 @@
       "destination": "/index.html",
       "has": [
         {
-          "type": "file",
-          "exists": false,
+          "type": "host",
           "value": "/$1"
         }
       ]
