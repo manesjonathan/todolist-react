@@ -1,8 +1,8 @@
 import axios from "axios";
-import {URL} from "./config.js";
 import moment from 'moment-timezone';
 import Cookies from 'js-cookie';
 
+const URL = process.env.URL;
 export const loginFunction = (email, password, navigate) => {
     return axios.post(`${URL}login`, {
         email: email,

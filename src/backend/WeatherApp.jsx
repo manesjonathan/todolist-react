@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {API_KEY, API_KEY_WEATHER} from "./config.js";
+
+const API_KEY = process.env.API_KEY;
+const API_KEY_WEATHER = process.env.API_KEY_WEATHER;
 
 const WeatherApp = () => {
     const [city, setCity] = useState(null);
