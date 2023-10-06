@@ -1,0 +1,36 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "https://todo-list.jonathan-manes.be/$1",
+      "has": [
+        {
+          "type": "header",
+          "key": "X-Forwarded-Proto",
+          "value": "!https"
+        },
+        {
+          "type": "header",
+          "key": "host",
+          "value": "!todo-list.jonathan-manes.be"
+        },
+        {
+          "type": "header",
+          "key": "x-vercel-deployment-url",
+          "value": "!*"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html",
+      "has": [
+        {
+          "type": "file",
+          "exists": false,
+          "value": "/$1"
+        }
+      ]
+    }
+  ]
+}
